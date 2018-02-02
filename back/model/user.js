@@ -9,7 +9,7 @@ class User {
                 if (err) {
                     return reject(err);
                 } else {
-                    resolve(new_user)
+                    return resolve(new_user)
                 }
             });
         })
