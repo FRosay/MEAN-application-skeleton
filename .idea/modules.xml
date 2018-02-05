@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/badmintonApp.iml" filepath="$PROJECT_DIR$/.idea/badmintonApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MEAN-application-skeleton.iml" filepath="$PROJECT_DIR$/.idea/MEAN-application-skeleton.iml" />
     </modules>
   </component>
 </project>
