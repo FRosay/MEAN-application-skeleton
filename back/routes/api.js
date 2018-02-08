@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const user = require('./user/user');
+const registration = require('./registration/registration');
 
-/* GET home page. */
 router.use('/user', user);
+router.use('/registration', registration);
 
 module.exports = router;

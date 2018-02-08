@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const logger = require('morgan');
 
-//Connection to the mongodb database
+//Connection to the dev database
 mongoose.connect('mongodb://localhost/badmintonApp');
 
 //Initialize our app variable

@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node bin/www",
-    "test": "mocha --recursive tests"
+    "test": "mocha tests --recursive"
   },
   "dependencies": {
     "body-parser": "^1.18.2",

@@ -8,12 +8,11 @@ class TestHttpSender {
                 method: "POST",
                 json: body
             }, (error, response, body) => {
-
-                if (!error && response.statusCode === 200) {
+                if (response.statusCode === 200) {
                     return resolve(body)
                 }
                 else {
-                    return reject(error)
+                    return reject(error || "An error has happened")
                 }
             })
         })
@@ -27,7 +26,12 @@ class TestHttpSender {
                 method: "GET",
             }, (error, response, body) => {
                 if (!error && response.statusCode === 200) {
-                    resolve(body)
+                    try {
+                        body = JSON.parse(body);
+                        resolve(body);
+                    } catch (error) {
+                        resolve(body);
+                    }
                 }
                 else {
                     reject(error)
