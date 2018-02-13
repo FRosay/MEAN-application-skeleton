@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { UsersService } from '../users.service';
+import { User } from '../user';
+
 @Component({
   selector: 'app-register-button',
   templateUrl: './register-button.component.html',
@@ -7,16 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterButtonComponent implements OnInit {
 
-  constructor() { }
+  constructor(private usersService: UsersService) {
+    this.usersService = usersService
+   }
+
   ngOnInit() {
   }
-    
-  register = function(name) {
-    console.log("utilisateur enregistré " + name);
-  }
 
-registerButton(): void {
-  
-}
+  addUser(name: string): void {
+    if (name !== null) {
+      this.usersService.addUser(new User(name));
+    }
+  }
 
 }

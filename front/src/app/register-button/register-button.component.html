@@ -1,5 +1,5 @@
-<div style="text-align:center">
-gefzgez  
+<div class="input-group">
+        <label for="newUser">New User: </label>
+        <input class="form-control" placeholder="Username" #userName />
+        <button type="button" class="btn btn-primary" name="newUser" (click)="addUser(userName.value)">Enregistrer </button>
 </div>
-  
-<button (click)="registerButton()">Register</button>

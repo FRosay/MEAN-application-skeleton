@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { UsersService } from './users.service';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterButtonComponent } from './register-button/register-button.component';
 import { ListUsersComponent } from './list-users/list-users.component';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ListUsersComponent } from './list-users/list-users.component';
     NgbModule.forRoot(),
     FormsModule
   ],
-  providers: [],
+  providers: [
+    UsersService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

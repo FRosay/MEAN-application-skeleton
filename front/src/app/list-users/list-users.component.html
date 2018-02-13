@@ -1,3 +1,16 @@
-<p>
-  list-users works!
-</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">name</th>
+      <th scope="col">action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of getUsers()">
+      <td #userName>{{user.name}}</td>
+      <td>
+        <a (click)="deleteUser(user.name)">supprimer</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
