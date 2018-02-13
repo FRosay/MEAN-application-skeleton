@@ -10,5 +10,13 @@ export class RegisterButtonComponent implements OnInit {
   constructor() { }
   ngOnInit() {
   }
+    
+  register = function(name) {
+    console.log("utilisateur enregistré " + name);
+  }
+
+registerButton(): void {
+  
+}
 
 }

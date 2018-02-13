@@ -12,4 +12,13 @@ export class ListUsersComponent implements OnInit {
   ngOnInit() {
   }
 
+  getUsers = function() {
+    return [
+      {
+      name: "Toto"
+    }, {
+      name: "Tata"
+    }]
+  }
+
 }
