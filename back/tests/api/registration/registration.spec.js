@@ -11,6 +11,9 @@ describe("Testing Registrations", () => {
 
     before((done) => {
         mongoose.model('Registration').remove({}, (err) => {
+            if (err) {
+                logger.error(err);
+            }
             return done(err);
         });
     })

@@ -10,7 +10,9 @@ describe("Testing Users", () => {
 
     before((done) => {
         mongoose.model('User').remove({}, (err) => {
-            logger.error(err);
+            if (err) {
+                logger.error(err);
+            }
             return done(err);
         });
     });
