@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Registration = require('../../model/registration/controller');
-
+const logger = require('../../logger');
 router.post('/new', (req, res) => {
 
     if (!req.body.registration) {
@@ -10,10 +10,11 @@ router.post('/new', (req, res) => {
     } else {
         Registration.create(req.body.registration)
             .then((registration) => {
+                logger.info('creating registration ', registration);
                 res.status(200).send({status: 200, registration})
             })
             .catch((err) => {
-                console.log(err);
+                logger.error(err);
                 res.status(500).send({status:500, message: err}
                 )})
     }

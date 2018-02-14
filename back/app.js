@@ -3,14 +3,13 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const logger = require('morgan');
+const logger = require('./logger');
 const config = require('config'); //we load the db location from the JSON files
-
 //Connection to the dev database
 
-//db connection      
+//db connection      <
 mongoose.connect(config.DBHost, {});
-console.log("Connecting to database : " + config.DBHost);
+logger.info("Connecting to database : " + config.DBHost);
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -24,7 +23,6 @@ app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/', (req, res) => {

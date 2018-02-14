@@ -4,9 +4,16 @@ const server = require('../../../bin/www')
 const requestSender = require("../request_sender");
 const chai = require('chai');
 const expect = chai.expect;
+const mongoose = require('mongoose');
 
 
 describe("Testing Registrations", () => {
+
+    before((done) => {
+        mongoose.model('Registration').remove({}, (err) => {
+            return done(err);
+        });
+    })
 
     describe("Testing registrations creation", () => {
 
