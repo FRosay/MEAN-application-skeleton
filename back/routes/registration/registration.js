@@ -9,11 +9,13 @@ router.post('/new', (req, res) => {
 
     } else {
         Registration.create(req.body.registration)
-            .then(() => {
-                res.status(200).send({status: 200})
+            .then((registration) => {
+                res.status(200).send({status: 200, registration})
             })
-            .catch((err) =>
-                res.status(500).send({status:500, message: err}))
+            .catch((err) => {
+                console.log(err);
+                res.status(500).send({status:500, message: err}
+                )})
     }
 
 });

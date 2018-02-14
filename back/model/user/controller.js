@@ -7,9 +7,8 @@ class UserController {
             new UserSchema(user).save(user, (err, user_saved) => {
                 if (err) {
                     return reject(err);
-                } else {
-                    return resolve(user_saved)
                 }
+                return resolve(user_saved)
             });
         })
     }

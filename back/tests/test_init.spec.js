@@ -1,31 +1,22 @@
+
 const mongoose = require('mongoose');
+process.env.NODE_ENV = 'test';
+const server = require('../bin/www')
 
-before(function (done) {
-    this.timeout(10000);
-
-    console.log("cleaning database");
+before((done) => {    
     var collectionsNames = Object.keys(mongoose.connection.collections)
     if (collectionsNames.length && collectionsNames.length > 0) {
-        collectionsNames.forEach((collectionName, done) => {
+        for (let collectionName of collectionsNames) {
             var collection = mongoose.connection.collections[collectionName];
-            collection.drop(function (err) {
-                if (err) {
-                    return done(err);
-                }
-            })
-        }, () => {
-            done();
-        })
-    } else {
-        done();
+            collection.drop();
+        }
     }
+    done();
 })
 
-after(() => {
+after((done) => {
     mongoose.connection.close((err) => {
-        if (err) {
-            done(err);
-        }
-        console.log("closing database connection");
-    })
+        done(err);
+        process.exit();
+    });
 })

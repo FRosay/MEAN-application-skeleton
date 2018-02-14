@@ -7,9 +7,8 @@ class RegistrationController {
             new RegistrationSchema(registration).save((err, registration_saved) => {
                 if (err) {
                     return reject(err);
-                } else {
-                    return resolve(registration_saved)
                 }
+                return resolve(registration_saved);
             })
         })
     }

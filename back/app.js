@@ -4,9 +4,16 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const logger = require('morgan');
+const config = require('config'); //we load the db location from the JSON files
 
 //Connection to the dev database
-mongoose.connect('mongodb://localhost/badmintonApp');
+
+//db connection      
+mongoose.connect(config.DBHost, {});
+console.log("Connecting to database : " + config.DBHost);
+
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
 //Initialize our app variable
 const app = express();
