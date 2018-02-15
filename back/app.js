@@ -4,17 +4,17 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const logger = require('./logger');
-const config = require('config'); //we load the db location from the JSON files
-//Connection to the dev database
+const config = require('config');
 
-//db connection      <
-mongoose.connect(config.DBHost, {});
+// Database connection 
+const db_config = config.DBConfig
+mongoose.connect(db_config.prefix + db_config.host + "/" + db_config.name, {});
 logger.info("Connecting to database : " + config.DBHost);
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
-//Initialize our app variable
+// Initialize our app variable
 const app = express();
 
 const api = require('./routes/api');

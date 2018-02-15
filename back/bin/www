@@ -7,11 +7,13 @@ const app = require('../app');
 const debug = require('debug')('basic-site:server');
 var http = require('http');
 const logger = require("../logger");
+const config = require('config');
+
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(config.ServerConfig.port);
 app.set('port', port);
 
 /**
