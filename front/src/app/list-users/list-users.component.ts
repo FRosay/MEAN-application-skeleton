@@ -16,13 +16,20 @@ export class ListUsersComponent implements OnInit {
   ngOnInit() {
   }
 
-  getUsers(): User[] {
-    return this.usersService.getUsers();
+  getAvailableUsers(): User[] {
+    return this.usersService.getAvailableUsers();
   }
 
-  deleteUser(name: string) {
-    this.usersService.deleteUser(name);
+  getUnavailableUsers(): User[] {
+    return this.usersService.getUnavailableUsers();
   }
 
+  deleteAvailableUser(name: string) {
+    this.usersService.deleteAvailableUser(name);
+  }
+
+  deleteUnavailableUser(name: string) {
+    this.usersService.deleteUnavailableUser(name);
+  }
 
 }

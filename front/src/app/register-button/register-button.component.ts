@@ -18,8 +18,20 @@ export class RegisterButtonComponent implements OnInit {
   }
 
   addUser(name: string): void {
-    if (name !== null) {
+    if (name) {
       this.usersService.addUser(new User(name));
+    }
+  }
+
+  putUserOnStandby(name: string): void {
+    if (name) {
+      this.usersService.putUserOnStandby(name);
+    }
+  }
+
+  unavailableUser(name: string): void {
+    if (name) {
+    this.usersService.unavailableUser(new User(name));
     }
   }
 

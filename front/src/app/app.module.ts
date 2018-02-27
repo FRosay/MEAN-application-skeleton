@@ -13,7 +13,7 @@ import { ListUsersComponent } from './list-users/list-users.component';
     AppComponent,
     RegisterButtonComponent,
     ListUsersComponent,
-  ],
+    ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),

@@ -1,5 +1,7 @@
 <div class="input-group">
-        <label for="newUser">New User: </label>
         <input class="form-control" placeholder="Username" #userName />
-        <button type="button" class="btn btn-primary" name="newUser" (click)="addUser(userName.value)">Enregistrer </button>
+        <label for="newUser">Je... </label>
+        <button type="button" class="btn btn-primary" (click)="addUser(userName.value)">Viens</button>
+        <button type="button" class="btn btn-warning" (click)="putUserOnStandby(userName.value)">Peux compléter</button>
+        <button type="button" class="btn btn-danger" (click)="unavailableUser(userName.value)">Ne viens pas</button>
 </div>

@@ -4,24 +4,53 @@ import { User } from './user';
 @Injectable()
 export class UsersService {
 
-  users:User[];
+  liste_participants: User[];
+  liste_absents: User[];
+  joueur_en_attente: User;
 
   constructor() {
-    this.users = [];
+    this.liste_participants = [];
+    this.liste_absents = [];
   }
 
-  addUser (user:User): void {
-    this.users.push(user);
+  addUser (user: User): void {
+    this.liste_participants.push(user);
   } 
 
-  getUsers (): User[] {
-    return this.users;
+  unavailableUser (user: User): void {
+    this.liste_absents.push(user);
   }
 
-  deleteUser (name: string): void {
-    this.users = this.users.filter(function(user) {
+  getAvailableUsers (): User[] {
+    return this.liste_participants;
+  }
+
+  getUnavailableUsers (): User[] {
+    return this.liste_absents;
+  }
+
+  deleteAvailableUser (name: string): void {
+    this.liste_participants = this.liste_participants.filter(function(user) {
       return user.name !== name;
     });
+  }
+
+  deleteUnavailableUser (name: string): void {
+    this.liste_absents = this.liste_absents.filter(function(user) {
+      return user.name !== name;
+    });
+  }
+
+  putUserOnStandby (name: string) {
+    const waitingUser = new User(name);
+   if (!this.joueur_en_attente && this.joueur_en_attente !== waitingUser) { 
+       this.joueur_en_attente = waitingUser
+    }
+    else {
+        this.liste_participants.push(waitingUser);
+        this.liste_participants.push(this.joueur_en_attente);
+        this.joueur_en_attente = undefined;
+    }
   }
 
 }
