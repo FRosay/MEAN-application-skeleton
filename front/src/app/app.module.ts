@@ -6,6 +6,10 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterButtonComponent } from './register-button/register-button.component';
 import { ListUsersComponent } from './list-users/list-users.component';
+import { RoadmapComponent } from './roadmap/roadmap.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { RegistrationService } from './registration/registration.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -13,14 +17,18 @@ import { ListUsersComponent } from './list-users/list-users.component';
     AppComponent,
     RegisterButtonComponent,
     ListUsersComponent,
+    RoadmapComponent,
     ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
-    FormsModule
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
-    UsersService ],
+    UsersService,
+    RegistrationService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

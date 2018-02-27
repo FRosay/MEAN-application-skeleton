@@ -13,44 +13,45 @@ export class UsersService {
     this.liste_absents = [];
   }
 
-  addUser (user: User): void {
+  addUser(user: User): void {
     this.liste_participants.push(user);
-  } 
+  }
 
-  unavailableUser (user: User): void {
+  unavailableUser(user: User): void {
     this.liste_absents.push(user);
   }
 
-  getAvailableUsers (): User[] {
+  getAvailableUsers(): User[] {
     return this.liste_participants;
   }
 
-  getUnavailableUsers (): User[] {
+  getUnavailableUsers(): User[] {
     return this.liste_absents;
   }
 
-  deleteAvailableUser (name: string): void {
-    this.liste_participants = this.liste_participants.filter(function(user) {
+  deleteAvailableUser(name: string): void {
+    this.liste_participants = this.liste_participants.filter(function (user) {
       return user.name !== name;
     });
   }
 
-  deleteUnavailableUser (name: string): void {
-    this.liste_absents = this.liste_absents.filter(function(user) {
+  deleteUnavailableUser(name: string): void {
+    this.liste_absents = this.liste_absents.filter(function (user) {
       return user.name !== name;
     });
   }
 
-  putUserOnStandby (name: string) {
+  putUserOnStandby(name: string): void {
     const waitingUser = new User(name);
-   if (!this.joueur_en_attente && this.joueur_en_attente !== waitingUser) { 
-       this.joueur_en_attente = waitingUser
+    if (!this.joueur_en_attente || this.joueur_en_attente.name === waitingUser.name) {
+      this.joueur_en_attente = waitingUser;
     }
     else {
-        this.liste_participants.push(waitingUser);
-        this.liste_participants.push(this.joueur_en_attente);
-        this.joueur_en_attente = undefined;
+      this.liste_participants.push(waitingUser);
+      this.liste_participants.push(this.joueur_en_attente);
+      this.joueur_en_attente = null;
     }
+  
   }
 
 }

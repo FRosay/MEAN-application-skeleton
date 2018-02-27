@@ -1,0 +1,12 @@
+a {
+    cursor: pointer;
+}
+
+.flex_user_lists {
+    display: flex;
+    justify-content: space-around;
+}
+
+.flex_user_list {
+    width: 40%;
+}

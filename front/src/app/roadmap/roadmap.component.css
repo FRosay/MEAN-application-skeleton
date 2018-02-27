@@ -1,0 +1,30 @@
+h1, h2 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.row {
+    display: flex;
+}
+
+.fixedleft {
+    display: flex;
+    justify-content: flex-start, space-around;
+    flex-flow: column;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.fixedright {
+    display: flex;
+    justify-content: space-around, center;
+    align-content: center;
+}
+
+.btn-info {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}

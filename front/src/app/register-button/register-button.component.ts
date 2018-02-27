@@ -19,6 +19,8 @@ export class RegisterButtonComponent implements OnInit {
 
   addUser(name: string): void {
     if (name) {
+      this.usersService.deleteAvailableUser(name);
+      this.usersService.deleteUnavailableUser(name);
       this.usersService.addUser(new User(name));
     }
   }
@@ -31,7 +33,9 @@ export class RegisterButtonComponent implements OnInit {
 
   unavailableUser(name: string): void {
     if (name) {
-    this.usersService.unavailableUser(new User(name));
+      this.usersService.deleteUnavailableUser(name);
+      this.usersService.deleteAvailableUser(name);
+      this.usersService.unavailableUser(new User(name));
     }
   }
 
