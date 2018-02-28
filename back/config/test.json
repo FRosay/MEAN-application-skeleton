@@ -4,6 +4,8 @@
         "port" : 27017,
         "name" : "badmintonAppTest",
         "prefix" : "mongodb://"
-
+    },
+    "ServerConfig": {
+        "port": "3000"
     }
 }
