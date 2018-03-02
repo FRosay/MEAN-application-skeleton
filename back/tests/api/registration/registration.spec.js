@@ -16,19 +16,12 @@ describe("Registrations", () => {
     before((done) => {
         mongoose.model('Registration').remove({}, (err) => {
             if (err) {
-                logger.error(err);
+                done(err);
             }
             const User = mongoose.model('User')
-            user1 = new User({
-                name: "user1"
-            });
-            user2 = new User({
-                name: "user2"
-            })
-            user3 = new User({
-                name: "user2"
-            })
-
+            user1 = new User({ name: "user1" });
+            user2 = new User({ name: "user2" })
+            user3 = new User({ name: "user2" })
             user1.save()
                 .then(() => user2.save())
                 .then(() => user3.save())
@@ -56,15 +49,45 @@ describe("Registrations", () => {
                 })
                 .catch((error) => done(error));
         });
+
+        it("send /api/registration/new with an invalid registration (breaking rules)", (done) => {
+            requestSender.createPost("/api/registration/new", {
+                registration:
+                    {
+                        end_at: moment("03-03-2018", "MM-DD-YYYY").toDate(),
+                        participants: [user1],
+                        not_participants: [user1]
+                    }
+            })
+                .then((response) => {
+                    done("should have failed");
+                })
+                .catch((error) => {
+                    expect(error).to.be.eql("USER_PARTICIPATE_AND_NOT_PARTIPATE");
+                    done();
+                });
+        });
+
+        it("send /api/registration/new with no registration", (done) => {
+            requestSender.createPost("/api/registration/new", {})
+                .then((response) => {
+                    done("should have failed");
+                })
+                .catch((error) => {
+                    expect(error).to.be.eql("NO_REGISTRATION");
+                    done();
+                });
+        });
     });
 
     describe("updates", (done) => {
+
         it("post /api/registration/update", (done) => {
             const registration = new Registration({
                 participants: [],
                 not_participants: [],
-                date: moment().toDate(),
-                end_at: moment().toDate()
+                end_at: moment().toDate(),
+                date: moment().toDate()
             });
             registration.save()
                 .then((registrationObj) => new Promise((resolve, reject) => {
@@ -77,18 +100,21 @@ describe("Registrations", () => {
                     expect(response.registration.participants).to.have.lengthOf(1);
                     done();
                 })
+                .catch(done);
+        });
+
+        it("post /api/registration/update with no registration", (done) => {
+            requestSender.createPost("/api/registration/update", {})
+                .then((response) => {
+                    done("should have failed");
+                })
                 .catch((error) => {
-                    console.log(error);
-                    done(error)
+                    expect(error).to.be.eql("NO_REGISTRATION");
+                    done();
                 });
         });
 
         it("post /api/registration/update with a user both participating and not participating", (done) => {
-
-            before((done) => {
-                Registration.remove({}, () => done());
-            })
-
             const registration = new Registration({
                 participants: [],
                 not_participants: [],
@@ -110,10 +136,31 @@ describe("Registrations", () => {
                     done();
                 });
         });
+
+        it("post /api/registration/update with a date inferior to end_at", (done) => {
+            const registration = new Registration({
+                participants: [],
+                not_participants: [],
+                date: moment().subtract(1, "day").toDate(),
+                end_at: moment().toDate()
+            });
+            registration.save()
+                .then((registrationObj) => new Promise((resolve, reject) => {
+                    return resolve(registrationObj);
+                }))
+                .then((registrationObj) => requestSender.createPost("/api/registration/update", { registration: registrationObj }))
+                .then((response) => {
+                    done("should have failed");
+                })
+                .catch((error) => {
+                    expect(error).to.be.eql("REGISTRATION_ENDAT_CANNOT_BE_SUPERIOR_TO_REGISTRATION_DATE");
+                    done();
+                });
+        });
     })
 
     describe('retreiving all registration', (done) => {
-        it("send a valid get request to /api/registration/all", (done) => {
+        it("get /api/registration/all", (done) => {
 
             requestSender.createGet("/api/registration/")
                 .then((response) => {
@@ -157,7 +204,7 @@ describe("Registrations", () => {
                 }], (err) => done(err));
         });
 
-        it("send a valid get request to /api/registration/next", (done) => {
+        it("get /api/registration/next", (done) => {
 
             requestSender.createGet("/api/registration/next")
                 .then((response) => {
@@ -205,7 +252,7 @@ describe("Registrations", () => {
             ], (err) => done(err))
         });
 
-        it('send a valid get request to /api/registration/?id', (done) => {
+        it('get /api/registration/?id', (done) => {
             requestSender.createGet("/api/registration/?id" + registration1._id)
                 .then((response) => {
                     expect(response.status).be.eql(200);
