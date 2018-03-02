@@ -20,6 +20,26 @@
   </div>
 
   <div class="flex_user_list">
+    <h2 class="sub-header">Peuvent compléter</h2>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">Nom :</th>
+          <th scope="col" class="text-center">Supprimer ?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of getUncertainUsers()">
+          <td #userName>{{user.name}}</td>
+          <td>
+            <a (click)="deleteUncertainUser(user.name)">Supprimer</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flex_user_list">
     <h2 class="sub-header">Absents</h2>
     <table class="table table-striped table-bordered">
       <thead>

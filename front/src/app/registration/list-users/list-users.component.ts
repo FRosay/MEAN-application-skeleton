@@ -20,6 +20,10 @@ export class ListUsersComponent implements OnInit {
     return this.registrationService.getAvailableUsers();
   }
 
+  getUncertainUsers(): User[] {
+    return this.registrationService.getUncertainUsers();
+  }
+
   getUnavailableUsers(): User[] {
     return this.registrationService.getUnavailableUsers();
   }
@@ -28,6 +32,10 @@ export class ListUsersComponent implements OnInit {
     this.registrationService.deleteAvailableUser(name);
   }
 
+  deleteUncertainUser(name: string) {
+    this.registrationService.deleteUncertainUser(name);
+  }
+  
   deleteUnavailableUser(name: string) {
     this.registrationService.deleteUnavailableUser(name);
   }
