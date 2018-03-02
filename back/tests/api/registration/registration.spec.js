@@ -160,12 +160,39 @@ describe("Registrations", () => {
     })
 
     describe('retreiving all registration', (done) => {
+
+
         it("get /api/registration/all", (done) => {
+            before((done) => {
+                let registration1 = new Registration({
+                    participants: [],
+                    not_participants: [],
+                    date: moment().toDate(),
+                    end_at: moment().toDate()
+                }),
+                registration2 = new Registration({
+                    participants: [],
+                    not_participants: [],
+                    date: moment().toDate(),
+                    end_at: moment().toDate()
+                })
+                ,registration3 = new Registration({
+                    participants: [],
+                    not_participants: [],
+                    date: moment().toDate(),
+                    end_at: moment().toDate()
+                });
+                Registration.remove({})
+                .then(() => registration1.save())
+                .then(() => registration2.save())
+                .then(() => registration3.save())
+                .catch(done);
+            })
 
             requestSender.createGet("/api/registration/")
                 .then((response) => {
                     expect(response.status).be.eql(200);
-                    expect(response.registrations).lengthOf(1);
+                    expect(response.registrations).lengthOf(3);
 
                     const registration = response.registrations[0];
                     expect(registration.created_at).not.to.be.null;

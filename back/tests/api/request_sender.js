@@ -19,7 +19,6 @@ class TestHttpSender {
     }
 
     static createGet(url) {
-
         return new Promise((resolve, reject) => {
             request({
                 url: "http://localhost:3000" + url,
