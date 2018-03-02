@@ -12,7 +12,7 @@ class TestHttpSender {
                     return resolve(body)
                 }
                 else {
-                    return reject(error || "An error has happened")
+                    return reject(error || body.message || "An error has happened")
                 }
             })
         })

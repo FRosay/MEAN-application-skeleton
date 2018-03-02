@@ -32,9 +32,9 @@ router.get('/next', (req, res) => {
 
 router.post('/update', (req, res) => {
     if (!req.body.registration) {
-        const error = new Error("no registration provided for update");
+        const error = "no registration provided for update"; 
         logger.error(error);
-        res.status(400).send(error)
+        res.send({status: 400, message: error});
     } else {
         Registration.update(req.body.registration)
             .then((registration) => {
@@ -42,9 +42,7 @@ router.post('/update', (req, res) => {
                 logger.info('updating registration ', registration);
             })
             .catch((error) => {
-                logger.error("catch");
-                logger.error(error);
-                res.status(500).send({ status: 500, message: err })
+                res.status(500).send({ status: 500, message: error })
             })
     }
 })

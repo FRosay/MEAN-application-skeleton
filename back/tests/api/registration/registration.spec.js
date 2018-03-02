@@ -29,7 +29,10 @@ describe("Registrations", () => {
                 name: "user2"
             })
 
-            user1.save(() => user2.save(() => user3.save(() => done())));
+            user1.save()
+                .then(() => user2.save())
+                .then(() => user3.save())
+                .then(() => done());
         });
     })
 
@@ -63,14 +66,11 @@ describe("Registrations", () => {
                 date: moment().toDate(),
                 end_at: moment().toDate()
             });
-            registration.save((err, registrationObj) => new Promise((resolve, reject) => {
-                if (err) {
-                    return reject(err);
-                } else {
+            registration.save()
+                .then((registrationObj) => new Promise((resolve, reject) => {
                     registrationObj.participants.push(user1);
                     return resolve(registrationObj);
-                }
-            })
+                }))
                 .then((registrationObj) => requestSender.createPost("/api/registration/update", { registration: registrationObj }))
                 .then((response) => {
                     expect(response.status).to.be.eql(200);
@@ -80,7 +80,7 @@ describe("Registrations", () => {
                 .catch((error) => {
                     console.log(error);
                     done(error)
-                }));
+                });
         });
 
         it("post /api/registration/update with a user both participating and not participating", (done) => {
@@ -95,24 +95,20 @@ describe("Registrations", () => {
                 date: moment().toDate(),
                 end_at: moment().toDate()
             });
-            registration.save((err, registrationObj) => new Promise((resolve, reject) => {
-                if (err) {
-                    return reject(err);
-                } else {
+            registration.save()
+                .then((registrationObj) => new Promise((resolve, reject) => {
                     registrationObj.participants.push(user1);
                     registrationObj.not_participants.push(user1);
                     return resolve(registrationObj);
-                }
-            })
+                }))
                 .then((registrationObj) => requestSender.createPost("/api/registration/update", { registration: registrationObj }))
                 .then((response) => {
-                    expect(response.status).to.be.eql(500);
-                    expect(response.error.message).to.be.eql(USER_PARTICIPATE_AND_NOT_PARTIPATE);
-                    done();
+                    done("should have failed");
                 })
                 .catch((error) => {
-                    done(error)
-                }));
+                    expect(error).to.be.eql("USER_PARTICIPATE_AND_NOT_PARTIPATE");
+                    done();
+                });
         });
     })
 

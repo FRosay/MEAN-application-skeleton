@@ -1,29 +1,22 @@
 const RegistrationSchema = require('./schema');
 const moment = require('moment');
 const logger = require('../../logger');
+const rules = require('./rules');
 
 class RegistrationController {
 
     create(registration) {
         return new Promise((resolve, reject) => {
-            new RegistrationSchema(registration).save((err, registration_saved) => {
-                if (err) {
-                    return reject(err);
-                }
-                return resolve(registration_saved);
-            })
+            const registrationObj = new RegistrationSchema(registration);
+            this.validate(registrationObj)
+            .then(() => registrationObj.save())
+            .then((registrationSaved) => resolve(registrationSaved))
+            .catch((error) => reject(error));
         })
     }
 
     getAll() {
-        return new Promise((resolve, reject) => {
-            RegistrationSchema.find({}, (err, users) => {
-                if (err) {
-                    return reject(err);
-                }
-                return resolve(users);
-            })
-        })
+        return RegistrationSchema.find({}, (err, users));
     }
 
     getById(id) {
@@ -31,12 +24,7 @@ class RegistrationController {
             if (!id) {
                 return reject('no regestration id given');
             }
-            RegistrationSchema.find({ _id: id }, (err, users) => {
-                if (err) {
-                    return reject(err);
-                }
-                return resolve(users);
-            })
+            RegistrationSchema.find({ _id: id });
         })
     }
 
@@ -61,52 +49,19 @@ class RegistrationController {
             RegistrationSchema.findById(registration._id, (err, registrationObj) => {
                 registrationObj.set(registration);
                 this.validate(registrationObj)
-                    .then(() => {
-                        registrationObj.save((err, updatedRegistration) => {
-                            if (err) {
-                                return reject(err);
-                            } else {
-                                return resolve(updatedRegistration);
-                            }
-                        })
-                    })
+                    .then(() => registrationObj.save())
+                    .then((registration) => resolve(registration))
                     .catch((error) => {
-                        return reject(error);
+                        reject(error)
                     })
             })
         })
     }
 
     validate(registration) {
-        return new Promise((resolve, reject) => {
-            async.parallel(
-                validationRules.map((rule) => {
-                    (next) => rule(registration, next)
-                }), (err) => {
-                    if (err) {
-                        return reject(err);
-                    } else {
-                        return resolve();
-                    }
-                }
-            )
-        });
+        return Promise.all(rules.map((rule) => rule(registration)))
     }
 }
 
-validationRules = [
-    function cantParticipateAndNotParticipate(registration, next) {
-        console.log("registration", registration);
-        //A user is both in participants and not_participants
-        if (registration.participants.some((participant) =>
-            registration.not_participants.some((not_participant) => {
-                return not_participant.toString() === participant.toString();
-            })
-        )) {
-            return next("USER_PARTICIPATE_AND_NOT_PARTIPATE");
-        }
-        return next();
-    }
-]
 
 module.exports = new RegistrationController();
