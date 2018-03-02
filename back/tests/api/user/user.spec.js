@@ -17,7 +17,7 @@ describe("Testing Users", () => {
         });
     });
 
-    describe("Testing Users creation", () => {
+    describe("creation", () => {
 
         it("send a valid post request to create a user", (done) => {
             requestSender.createPost("/api/user/new", { user: { name: "Jim" } })

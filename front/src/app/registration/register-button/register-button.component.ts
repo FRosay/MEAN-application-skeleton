@@ -17,13 +17,13 @@ export class RegisterButtonComponent implements OnInit {
 
   addUser(name: string): void {
     if (name) {
-      this.registrationService.addUserByName(name);
+      this.registrationService.addUser(name);
     }
   }
 
   putUserOnStandby(name: string): void {
     if (name) {
-      this.registrationService.putUserOnStandbyByName(name);
+      this.registrationService.putUserOnStandby(name);
     }
   }
 
@@ -31,7 +31,7 @@ export class RegisterButtonComponent implements OnInit {
     if (name) {
       this.registrationService.deleteUnavailableUser(name);
       this.registrationService.deleteAvailableUser(name);
-      this.registrationService.addUnavailableUserByName(name);
+      this.registrationService.addUnavailableUser(name);
     }
   }
 

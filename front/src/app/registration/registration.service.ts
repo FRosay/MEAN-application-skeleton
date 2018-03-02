@@ -10,13 +10,13 @@ export class RegistrationService {
 
   constructor(private http: HttpClient) { }
 
-  addUserByName(name: string): void {
+  addUser(name: string): void {
     if (name) {
       this.reservation.addUser(new User(name));
     }
   }
 
-  addUnavailableUserByName(name: string): void {
+  addUnavailableUser(name: string): void {
     if (name) {
       this.reservation.addUnavailableUser(new User(name));
     }
@@ -31,16 +31,21 @@ export class RegistrationService {
   }
 
   deleteAvailableUser(name: string): void {
-    this.reservation.deleteAvailableUserByName(name);
+    if (name) {
+      this.reservation.deleteAvailableUserByName(name);
+    }
   }
 
   deleteUnavailableUser(name: string): void {
-    this.reservation.deleteUnavailableUserByName(name);
+    if (name) {
+      this.reservation.deleteUnavailableUserByName(name);
+    }
   }
 
-  putUserOnStandbyByName(name: string): void {
-    this.reservation.putUserOnStandbyByName(name);
+  putUserOnStandby(name: string): void {
+    if (name) {
+      this.reservation.putUserOnStandbyByName(name);
+    }
   }
-
 
 }
