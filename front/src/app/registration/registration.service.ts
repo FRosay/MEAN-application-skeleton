@@ -26,6 +26,10 @@ export class RegistrationService {
     return this.reservation.getAvailableUsers();
   }
 
+  getUncertainUsers(): User[] {
+    return this.reservation.getUncertainUsers();
+  }
+
   getUnavailableUsers(): User[] {
     return this.reservation.getUnavailableUsers();
   }
@@ -33,6 +37,12 @@ export class RegistrationService {
   deleteAvailableUser(name: string): void {
     if (name) {
       this.reservation.deleteAvailableUserByName(name);
+    }
+  }
+
+  deleteUncertainUser(name: string): void {
+    if (name) {
+      this.reservation.deleteUncertainUserByName(name);
     }
   }
 
