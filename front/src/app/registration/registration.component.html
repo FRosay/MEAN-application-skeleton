@@ -3,5 +3,7 @@
     <a routerLink="/roadmap">--> Notre Roadmap ! <--</a>
   </nav>
   <app-register-button></app-register-button>
-  <app-list-users></app-list-users>
+  <app-list-users [user_list]="registrationService.getAvailableUsers()"></app-list-users>
+  <app-list-users [user_list]="registrationService.getUncertainUsers()"></app-list-users>
+  <app-list-users [user_list]="registrationService.getUnavailableUsers()"></app-list-users>
 <div>

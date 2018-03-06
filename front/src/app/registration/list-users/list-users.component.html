@@ -1,59 +1,17 @@
 <div class="flex_user_lists">
+
   <div class="flex_user_list">
     <h2 class="sub-header">Présents</h2>
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
           <th scope="col" class="text-center">Nom :</th>
-          <th scope="col" class="text-center">Supprimer ?</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of getAvailableUsers()">
+        <tr *ngFor="let user of user_list">
           <td #userName>{{user.name}}</td>
-          <td>
-            <a (click)="deleteAvailableUser(user.name)">Supprimer</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="flex_user_list">
-    <h2 class="sub-header">Peuvent compléter</h2>
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th scope="col" class="text-center">Nom :</th>
-          <th scope="col" class="text-center">Supprimer ?</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of getUncertainUsers()">
-          <td #userName>{{user.name}}</td>
-          <td>
-            <a (click)="deleteUncertainUser(user.name)">Supprimer</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="flex_user_list">
-    <h2 class="sub-header">Absents</h2>
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th scope="col" class="text-center">Nom :</th>
-          <th scope="col" class="text-center">Supprimer ?</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of getUnavailableUsers()">
-          <td #userName>{{user.name}}</td>
-          <td>
-            <a (click)="deleteUnavailableUser(user.name)">Supprimer</a>
-          </td>
+          <td> <a class="glyphicon glyphicon-trash" (click)="deleteUserFromList(user.name)"></a></td>
         </tr>
       </tbody>
     </table>

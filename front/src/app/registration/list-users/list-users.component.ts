@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { RegistrationService } from '../registration.service';
 import { User } from '../../elements/user';
 
@@ -9,35 +9,13 @@ import { User } from '../../elements/user';
 })
 export class ListUsersComponent implements OnInit {
 
-  constructor(private registrationService: RegistrationService) {
-    this.registrationService = registrationService
-  }
+  @Input() user_list: User[];
 
   ngOnInit() {
   }
 
-  getAvailableUsers(): User[] {
-    return this.registrationService.getAvailableUsers();
-  }
-
-  getUncertainUsers(): User[] {
-    return this.registrationService.getUncertainUsers();
-  }
-
-  getUnavailableUsers(): User[] {
-    return this.registrationService.getUnavailableUsers();
-  }
-
-  deleteAvailableUser(name: string) {
-    this.registrationService.deleteAvailableUser(name);
-  }
-
-  deleteUncertainUser(name: string) {
-    this.registrationService.deleteUncertainUser(name);
+  deleteUserFromList(name: string): void {
+    this.user_list = this.user_list.filter((user) => user.name !== name);
   }
   
-  deleteUnavailableUser(name: string) {
-    this.registrationService.deleteUnavailableUser(name);
-  }
-
 }

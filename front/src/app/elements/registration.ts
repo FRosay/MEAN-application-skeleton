@@ -16,14 +16,14 @@ export class Registration {
     addUser(user: User) {
         this.deleteAvailableUserByName(user.name);
         this.deleteUnavailableUserByName(user.name);
-        this.deleteUncertainUserByName(name);
+        this.deleteUncertainUserByName(user.name);
         this.liste_participants.push(user);
     }
 
     addUnavailableUser(user: User): void {
-        this.deleteAvailableUserByName(name);
-        this.deleteUnavailableUserByName(name);
-        this.deleteUncertainUserByName(name);
+        this.deleteAvailableUserByName(user.name);
+        this.deleteUnavailableUserByName(user.name);
+        this.deleteUncertainUserByName(user.name);
         this.liste_absents.push(user);
     }
 

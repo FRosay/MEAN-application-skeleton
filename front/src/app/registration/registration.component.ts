@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RegistrationService } from './registration.service';
+import { User } from '../elements/user';
 
 @Component({
   selector: 'app-registration',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private registrationService: RegistrationService) {
+    this.registrationService = registrationService
+  }
   ngOnInit() {
   }
+
+  getAvailableUsers(): User[] {
+    return this.registrationService.getAvailableUsers();
+  }
+
+  getUncertainUsers(): User[] {
+    return this.registrationService.getUncertainUsers();
+  }
+
+  getUnavailableUsers(): User[] {
+    return this.registrationService.getUnavailableUsers();
+  }
+
+  
 
 }
