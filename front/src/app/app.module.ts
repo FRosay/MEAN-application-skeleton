@@ -10,6 +10,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { RegistrationService } from './registration/registration.service'
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationHttpService } from './registration/registration-http.service';
 
 
 @NgModule({
@@ -28,7 +29,9 @@ import { RegistrationComponent } from './registration/registration.component';
     HttpClientModule
   ],
   providers: [
-    RegistrationService ],
+    RegistrationService,
+    RegistrationHttpService,
+     ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
