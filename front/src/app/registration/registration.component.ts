@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from './registration.service';
 import { User } from '../elements/user';
+import { RegistrationHttpService } from './registration-http.service'
+import { Registration } from '../elements/registration';
 
 @Component({
   selector: 'app-registration',
@@ -9,10 +11,26 @@ import { User } from '../elements/user';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private registrationService: RegistrationService) {
-    this.registrationService = registrationService
+  constructor(private registrationService: RegistrationService,
+    private registrationHttpService: RegistrationHttpService) {
+    this.registrationService = registrationService;
+    this.registrationHttpService = registrationHttpService;
   }
+
   ngOnInit() {
+
+   /* this.registrationHttpService.getRegistrationNext()
+      .subscribe(data => {
+        console.log(data);
+        if (data.registration) {
+          this.registrationService.setRegistration(data.registration)
+        } else {
+          this.registrationHttpService.createRegistration(new Registration())
+          .subscribe(data => {
+            this.registrationService.setRegistration(data.registration)
+          })
+        }
+      });*/
   }
 
   getAvailableUsers(): User[] {
@@ -26,7 +44,5 @@ export class RegistrationComponent implements OnInit {
   getUnavailableUsers(): User[] {
     return this.registrationService.getUnavailableUsers();
   }
-
-  
 
 }

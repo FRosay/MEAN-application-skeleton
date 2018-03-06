@@ -28,7 +28,7 @@ router.get('/next', (req, res) => {
             res.status(200).send({ status: 200, registration }))
         .catch((error) =>
             res.status(500).send({ status: 500, message: err }))
-})
+});
 
 router.post('/update', (req, res) => {
     if (!req.body.registration) {
@@ -45,7 +45,7 @@ router.post('/update', (req, res) => {
                 res.status(500).send({ status: 500, message: error })
             })
     }
-})
+});
 
 router.get('/:id', (req, res) => {
     if (req.params.id) {
@@ -63,6 +63,6 @@ router.get('/:id', (req, res) => {
                 res.status(500).send({ status: 500, message: err }))
     }
 
-})
+});
 
 module.exports = router;

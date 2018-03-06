@@ -58,4 +58,8 @@ export class RegistrationService {
     }
   }
 
+  setRegistration(registration: Registration) {
+    this.reservation.update(registration);
+  }
+
 }

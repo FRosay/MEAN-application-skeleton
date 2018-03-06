@@ -1,7 +1,8 @@
 import { User } from './user'
 
 export class Registration {
-    date: Date;
+    date: number;
+    end_at: number;
     liste_participants: User[];
     liste_absents: User[];
     liste_incertains: User[];
@@ -11,6 +12,8 @@ export class Registration {
         this.liste_absents = [];
         this.liste_participants = [];
         this.liste_incertains = [];
+        this.end_at = Date.now();
+        this.date = Date.now();
     }
 
     addUser(user: User) {
@@ -75,5 +78,13 @@ export class Registration {
             this.joueur_en_attente = null;
         }
 
+    }
+
+    update(data: any) {
+        this.liste_absents = data.liste_absents;
+        this.liste_participants = data.liste_participants;
+        this.liste_incertains = data.liste_incertains;
+        this.end_at = data.end_at;
+        this.date = data.date;
     }
 }

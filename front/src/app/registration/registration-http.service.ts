@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Registration } from '../elements/registration';
+import { catchError, map, tap } from 'rxjs/operators';
 @Injectable()
+
 export class RegistrationHttpService {
 
   private registration_url = "http://localhost:3000/api/registration";
@@ -10,22 +12,17 @@ export class RegistrationHttpService {
   constructor(
     private http: HttpClient) { }
 
-    getRegistrations(): Observable<Registration[]> {
-        return null;
-    }
+  getRegistrationNext() {
+    return this.http.get<any>(this.registration_url + "/next")
+  }
 
-    updateRegistration(): Observable<Registration> {
-      return null;
+  updateRegistration(registration: Registration): Observable<Registration> {
+    return null;
+  }
 
-    }
+  createRegistration(registration: Registration) {
+    return this.http.post<any>(this.registration_url + "/new", {registration: registration})
+  }
 
-    createRegistration(): Observable<Registration> {
-      return null;
-    }
-
-    deleteRegistration(): void {
-      return null;
-    }
-    
 }
 
