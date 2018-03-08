@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const logger = require('./logger');
 const config = require('config');
+const jobs = require('./jobs/jobs');
+const async = require('async');
 
 // Database connection 
 const db_config = config.DBConfig
@@ -18,6 +20,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 const app = express();
 
 app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT")
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -34,7 +37,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../front/dist/index.html'));
 });
-
 app.use('/api', api);
 
 // catch 404 and forward to error handler
@@ -43,5 +45,9 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
+jobs.start();
+
+
 
 module.exports = app;

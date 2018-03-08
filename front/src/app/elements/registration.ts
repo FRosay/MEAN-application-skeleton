@@ -1,90 +1,74 @@
-import { User } from './user'
-
 export class Registration {
+    id: string;
     date: number;
     end_at: number;
-    liste_participants: User[];
-    liste_absents: User[];
-    liste_incertains: User[];
-    joueur_en_attente: User;
+    liste_participants: String[];
+    liste_absents: String[];
+    liste_incertains: String[];
 
-    constructor() {
-        this.liste_absents = [];
-        this.liste_participants = [];
-        this.liste_incertains = [];
-        this.end_at = Date.now();
-        this.date = Date.now();
+    constructor(id= null,
+        liste_absents = [],
+        list_participants = [],
+        liste_incertains = [],
+        end_at = null,
+        date = null) {
+        this.id = id;
+        this.liste_absents = liste_absents;
+        this.liste_participants = list_participants;
+        this.liste_incertains = liste_incertains;
+        this.end_at = end_at;
+        this.date = date;
     }
 
-    addUser(user: User) {
-        this.deleteAvailableUserByName(user.name);
-        this.deleteUnavailableUserByName(user.name);
-        this.deleteUncertainUserByName(user.name);
+    addUser(user: String) {
+        this.deleteAvailableUserByName(user);
+        this.deleteUnavailableUserByName(user);
+        this.deleteUncertainUserByName(user);
         this.liste_participants.push(user);
     }
 
-    addUnavailableUser(user: User): void {
-        this.deleteAvailableUserByName(user.name);
-        this.deleteUnavailableUserByName(user.name);
-        this.deleteUncertainUserByName(user.name);
+    addUnavailableUser(user: String): void {
+        this.deleteAvailableUserByName(user);
+        this.deleteUnavailableUserByName(user);
+        this.deleteUncertainUserByName(user);
         this.liste_absents.push(user);
     }
 
-    getAvailableUsers(): User[] {
+    addUncertainUser(user: String): void {
+        this.deleteAvailableUserByName(user);
+        this.deleteUnavailableUserByName(user);
+        this.deleteUncertainUserByName(user);
+        this.liste_incertains.push(user);
+    }
+
+    getAvailableUsers(): String[] {
         return this.liste_participants;
     }
 
-    getUncertainUsers(): User[] {
+    getUncertainUsers(): String[] {
         return this.liste_incertains;
     }
 
-    getUnavailableUsers(): User[] {
+    getUnavailableUsers(): String[] {
         return this.liste_absents;
     }
 
-    deleteAvailableUserByName(name: string): void {
+    deleteAvailableUserByName(name: String): void {
         this.liste_participants = this.liste_participants.filter(function (user) {
-            return user.name !== name;
+            return user !== name;
         });
     }
 
-    deleteUncertainUserByName(name: string): void {
+    deleteUncertainUserByName(name: String): void {
         this.liste_incertains = this.liste_incertains.filter(function (user) {
-            return user.name !== name;
+            return user !== name;
         });
     }
 
-    deleteUnavailableUserByName(name: string): void {
+    deleteUnavailableUserByName(name: String): void {
         this.liste_absents = this.liste_absents.filter(function (user) {
-            return user.name !== name;
+            return user !== name;
         });
     }
 
-    putUserOnStandbyByName(name: string): void {
-        const waitingUser = new User(name);
-        if (!this.joueur_en_attente || this.joueur_en_attente.name === waitingUser.name) {
-            this.joueur_en_attente = waitingUser;
-            this.deleteUncertainUserByName(name);
-            this.deleteAvailableUserByName(name);
-            this.deleteUnavailableUserByName(name);
-            this.liste_incertains.push(waitingUser);
-        }
-        else {
-            this.liste_incertains= [];
-            this.deleteAvailableUserByName(name);
-            this.deleteUnavailableUserByName(name);
-            this.liste_participants.push(waitingUser);
-            this.liste_participants.push(this.joueur_en_attente);
-            this.joueur_en_attente = null;
-        }
-
-    }
-
-    update(data: any) {
-        this.liste_absents = data.liste_absents;
-        this.liste_participants = data.liste_participants;
-        this.liste_incertains = data.liste_incertains;
-        this.end_at = data.end_at;
-        this.date = data.date;
-    }
 }

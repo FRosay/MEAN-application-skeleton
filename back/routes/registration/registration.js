@@ -30,7 +30,7 @@ router.get('/next', (req, res) => {
             res.status(500).send({ status: 500, message: err }))
 });
 
-router.post('/update', (req, res) => {
+router.put('/update', (req, res) => {
     if (!req.body.registration) {
         const error = "NO_REGISTRATION"; 
         logger.error(error);

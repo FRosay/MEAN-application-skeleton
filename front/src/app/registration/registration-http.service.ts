@@ -12,16 +12,18 @@ export class RegistrationHttpService {
   constructor(
     private http: HttpClient) { }
 
-  getRegistrationNext() {
+  getRegistrationNext() : Observable<any>{
     return this.http.get<any>(this.registration_url + "/next")
   }
 
-  updateRegistration(registration: Registration): Observable<Registration> {
-    return null;
-  }
-
-  createRegistration(registration: Registration) {
-    return this.http.post<any>(this.registration_url + "/new", {registration: registration})
+  updateRegistration(registration: Registration): Observable<any> {
+    return this.http.put<any>(this.registration_url + "/update", {registration:
+    {
+      _id: registration.id,
+      participants: registration.liste_participants,
+      not_participants: registration.liste_absents,
+      uncertains: registration.liste_incertains
+    }})
   }
 
 }

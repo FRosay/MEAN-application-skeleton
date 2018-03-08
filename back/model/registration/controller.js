@@ -24,7 +24,7 @@ class RegistrationController {
             if (!id) {
                 return reject('no regestration id given');
             }
-            RegistrationSchema.find({ _id: id });
+            return RegistrationSchema.find({ _id: id });
         })
     }
 
@@ -47,8 +47,11 @@ class RegistrationController {
     update(registration) {
         return new Promise((resolve, reject) => {
             RegistrationSchema.findById(registration._id, (err, registrationObj) => {
+                if (!registrationObj) {
+                    return reject("can't find registration : "+ JSON.stringify(registration));
+                }
                 registrationObj.set(registration);
-                this.validate(registrationObj)
+                return this.validate(registrationObj)
                     .then(() => registrationObj.save())
                     .then((registration) => resolve(registration))
                     .catch((error) => {
@@ -62,6 +65,5 @@ class RegistrationController {
         return Promise.all(rules.map((rule) => rule(registration)))
     }
 }
-
 
 module.exports = new RegistrationController();
