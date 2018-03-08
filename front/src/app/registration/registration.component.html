@@ -3,7 +3,7 @@
     <a routerLink="/roadmap">--> Notre Roadmap ! <--</a>
   </nav>
   <app-register-button></app-register-button>
-  <app-list-users [user_list]="getAvailableUsers()"></app-list-users>
-  <app-list-users [user_list]="getUncertainUsers()"></app-list-users>
-  <app-list-users [user_list]="getUnavailableUsers()"></app-list-users>
+  <app-list-users (onDelete)="deleteAvailableUser($event)" [user_list]="getAvailableUsers()"></app-list-users>
+  <app-list-users (onDelete)="deleteUncertainUser($event)" [user_list]="getUncertainUsers()"></app-list-users>
+  <app-list-users (onDelete)="deleteUnavailableUser($event)" [user_list]="getUnavailableUsers()"></app-list-users>
 <div>

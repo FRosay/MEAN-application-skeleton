@@ -13,15 +13,14 @@ export class RegistrationService {
     this.registrationHttpService = registrationHttpService;
   }
 
+  getRegistrationNext() {
+    return this.registrationHttpService.getRegistrationNext();
+  }
+
   addUser(name: string): void {
     if (name) {
       this.reservation.addUser(name);
-      this.registrationHttpService.updateRegistration(this.reservation)
-        .subscribe((response) => {
-          if (response.error) {
-            console.error(response.error);
-          }
-        });
+      this.registrationHttpService.updateRegistration(this.reservation);
     }
   }
 
@@ -29,19 +28,13 @@ export class RegistrationService {
     if (name) {
       this.reservation.addUnavailableUser(name);
       this.registrationHttpService.updateRegistration(this.reservation)
-        .subscribe((response) => {
-          console.error(response.error);
-        });
     }
   }
 
   putUserOnStandby(name: string): void {
     if (name) {
       this.reservation.addUncertainUser(name);
-      this.registrationHttpService.updateRegistration(this.reservation)
-        .subscribe((response) => {
-          console.error(response.error);
-        });
+      this.registrationHttpService.updateRegistration(this.reservation);
     }
   }
 
@@ -84,6 +77,8 @@ export class RegistrationService {
       registrationData.not_participants,
       registrationData.participants,
       registrationData.uncertains,
+      registrationData.end_at,
+      registrationData.date
     );
   }
 

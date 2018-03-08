@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { RegistrationService } from '../registration.service';
-import { User } from '../../elements/user';
 
 @Component({
   selector: 'app-list-users',
@@ -9,13 +8,18 @@ import { User } from '../../elements/user';
 })
 export class ListUsersComponent implements OnInit {
 
-  @Input() user_list: User[];
+  @Input() user_list: String[];
+  @Output() onDelete: EventEmitter<String> = new EventEmitter<String>();
 
   ngOnInit() {
   }
 
-  deleteUserFromList(name: string): void {
-    this.user_list = this.user_list.filter((user) => user.name !== name);
+  delete(user: String) {
+    this.onDelete.emit(user);
   }
-  
+
+  deleteUserFromList(name: string): void {
+    this.user_list = this.user_list.filter((user) => user !== name);
+  }
+
 }

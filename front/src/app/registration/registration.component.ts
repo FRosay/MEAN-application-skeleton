@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from './registration.service';
-import { RegistrationHttpService } from './registration-http.service'
 import { Registration } from '../elements/registration';
 
 @Component({
@@ -10,19 +9,18 @@ import { Registration } from '../elements/registration';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private registrationService: RegistrationService,
-    private registrationHttpService: RegistrationHttpService) {
+  constructor(private registrationService: RegistrationService) {
     this.registrationService = registrationService;
-    this.registrationHttpService = registrationHttpService;
   }
 
   ngOnInit() {
-    this.registrationHttpService.getRegistrationNext()
-      .subscribe(response => {
-        if (response.status && response.status === 200) {
-          this.registrationService.setRegistration(response.registration);
-        }
-      });
+    this.registrationService.getRegistrationNext()
+      .then((registration) => {
+        this.registrationService.setRegistration(registration);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
   }
 
   getAvailableUsers(): String[] {
@@ -35,6 +33,18 @@ export class RegistrationComponent implements OnInit {
 
   getUnavailableUsers(): String[] {
     return this.registrationService.getUnavailableUsers();
+  }
+
+  deleteAvailableUser(name: string) {
+    this.registrationService.deleteAvailableUser(name);
+  }
+
+  deleteUncertainUser(name: string) {
+    this.registrationService.deleteUncertainUser(name);
+  }
+
+  deleteUnavailableUser(name: string) {
+    this.registrationService.deleteUnavailableUser(name);
   }
 
 }
