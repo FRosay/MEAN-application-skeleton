@@ -18,6 +18,23 @@ class TestHttpSender {
         })
     }
 
+    static createPut(url, body) {
+        return new Promise((resolve, reject) => {
+            request({
+                url: "http://localhost:3000" + url,
+                method: "PUT",
+                json: body
+            }, (error, response, body) => {
+                if (response.statusCode === 200) {
+                    return resolve(body)
+                }
+                else {
+                    return reject(error || body.message || "An error has happened")
+                }
+            })
+        })
+    }
+
     static createGet(url) {
         return new Promise((resolve, reject) => {
             request({

@@ -94,7 +94,7 @@ describe("Registrations", () => {
                     registrationObj.participants.push(user1);
                     return resolve(registrationObj);
                 }))
-                .then((registrationObj) => requestSender.createPost("/api/registration/update", { registration: registrationObj }))
+                .then((registrationObj) => requestSender.createPut("/api/registration/update", { registration: registrationObj }))
                 .then((response) => {
                     expect(response.status).to.be.eql(200);
                     expect(response.registration.participants).to.have.lengthOf(1);
@@ -104,7 +104,7 @@ describe("Registrations", () => {
         });
 
         it("post /api/registration/update with no registration", (done) => {
-            requestSender.createPost("/api/registration/update", {})
+            requestSender.createPut("/api/registration/update", {})
                 .then((response) => {
                     done("should have failed");
                 })
@@ -127,7 +127,7 @@ describe("Registrations", () => {
                     registrationObj.not_participants.push(user1);
                     return resolve(registrationObj);
                 }))
-                .then((registrationObj) => requestSender.createPost("/api/registration/update", { registration: registrationObj }))
+                .then((registrationObj) => requestSender.createPut("/api/registration/update", { registration: registrationObj }))
                 .then((response) => {
                     done("should have failed");
                 })
@@ -148,7 +148,7 @@ describe("Registrations", () => {
                 .then((registrationObj) => new Promise((resolve, reject) => {
                     return resolve(registrationObj);
                 }))
-                .then((registrationObj) => requestSender.createPost("/api/registration/update", { registration: registrationObj }))
+                .then((registrationObj) => requestSender.createPut("/api/registration/update", { registration: registrationObj }))
                 .then((response) => {
                     done("should have failed");
                 })
