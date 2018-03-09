@@ -14,13 +14,19 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getRegistration();
+  }
+
+  getRegistration() {
     this.registrationService.getRegistrationNext()
-      .then((registration) => {
-        this.registrationService.setRegistration(registration);
+    .then((registration) => {
+      this.registrationService.setRegistration(registration);
+    })
+    .catch(() => {
+      setTimeout(() => {
+        this.getRegistration();
       })
-      .catch((error) => {
-        console.error(error);
-      })
+    })
   }
 
   isTimedLimited(): Boolean {

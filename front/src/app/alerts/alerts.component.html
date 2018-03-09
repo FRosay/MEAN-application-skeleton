@@ -1,0 +1,7 @@
+<div class="alerts-header">
+  <div *ngFor="let alert of getAlerts()">
+    <div class="alert alert-message" role="alert" [ngClass]="{'alert-success': alert.isSuccess(), 'alert-info': alert.isInfo(), 'alert-warning': alert.isWarning(), 'alert-danger': alert.isError() }">
+      {{alert.message}}
+    </div>
+  </div>
+</div>
