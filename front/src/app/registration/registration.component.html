@@ -5,14 +5,25 @@
   </nav>
   <div *ngIf="serviceAvailable(); else loading">
     <h2>Réservation pour le
-      <span>{{getRegistrationDate() | date:"fullDate"}}</span>
+      <b>{{getRegistrationDate() | date:"fullDate"}}</b>
+      <br>
+      <span *ngIf="isTimedLimited()">avant le {{getRegistrationEndDate() | date:"fullDate"}}</span>
     </h2>
     <app-register-button></app-register-button>
-    <app-list-users (onDelete)="deleteAvailableUser($event)" title="Présents" [user_list]="getAvailableUsers()"></app-list-users>
-    <app-list-users (onDelete)="deleteUncertainUser($event)" title="Peux compléter" [user_list]="getUncertainUsers()"></app-list-users>
-    <app-list-users (onDelete)="deleteUnavailableUser($event)" title="Ne viens pas" [user_list]="getUnavailableUsers()"></app-list-users>
+    <div class="flex_user_lists">
+      <div class="flex_user_list">
+        <app-list-users (onDelete)="deleteAvailableUser($event)" title="Présents" [user_list]="getAvailableUsers()"></app-list-users>
+      </div>
+      <div class="flex_user_list">
+        <app-list-users (onDelete)="deleteUncertainUser($event)" title="Peux compléter" [user_list]="getUncertainUsers()"></app-list-users>
+      </div>
+      <div class="flex_user_list">
+        <app-list-users (onDelete)="deleteUnavailableUser($event)" title="Ne viens pas" [user_list]="getUnavailableUsers()"></app-list-users>
+      </div>
+    </div>
   </div>
   <ng-template #loading>
-    <div class="loader"></div> 
+    <div class="loader"></div>
   </ng-template>
-  <div>
+
+</div>

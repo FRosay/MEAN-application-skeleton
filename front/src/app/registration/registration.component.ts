@@ -23,6 +23,15 @@ export class RegistrationComponent implements OnInit {
       })
   }
 
+  isTimedLimited(): Boolean {
+    const date = this.registrationService.getRegistrationDate();
+    const end_date = this.registrationService.getRegistrationEndAt();
+    if (!end_date) {
+      return false;
+    }
+    return date.getTime() !== end_date.getTime();
+  }
+
   serviceAvailable(): Boolean {
     return this.registrationService.isAvailable();
   }

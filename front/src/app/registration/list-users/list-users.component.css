@@ -11,3 +11,15 @@ a {
     width: 30%;
 }
 
+.action_cell {
+    width: 10%;
+}
+
+.user_cell{
+    text-align: left;
+}
+
+.userlist_panel {
+    margin-right: 20%;
+    margin-left: 20%;
+}
