@@ -1,0 +1,30 @@
+.flex_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 200px;
+    max-width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.user_list_group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex_user_list {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.roadmap_link {
+    flex: auto;
+}
+
+.loading {
+    flex: auto;
+}

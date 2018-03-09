@@ -1,7 +1,6 @@
-<div>
-  <nav>
-    <a routerLink="/roadmap">--> Notre Roadmap !
-      <--</a>
+<div class="flex_content">
+  <nav class="roadmap_link">
+    <a routerLink="/roadmap">--> Notre Roadmap ! <--</a>
   </nav>
   <div *ngIf="serviceAvailable(); else loading">
     <h2>Réservation pour le
@@ -10,7 +9,7 @@
       <span *ngIf="isTimedLimited()">avant le {{getRegistrationEndDate() | date:"fullDate"}}</span>
     </h2>
     <app-register-button></app-register-button>
-    <div class="flex_user_lists">
+    <div class="user_list_group">
       <div class="flex_user_list">
         <app-list-users (onDelete)="deleteAvailableUser($event)" title="Présents" [user_list]="getAvailableUsers()"></app-list-users>
       </div>
@@ -22,7 +21,7 @@
       </div>
     </div>
   </div>
-  <ng-template #loading>
+  <ng-template class="loading" #loading>
     <div class="loader"></div>
   </ng-template>
 

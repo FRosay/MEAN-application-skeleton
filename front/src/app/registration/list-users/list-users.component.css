@@ -2,24 +2,10 @@ a {
     cursor: pointer;
 }
 
-.flex_user_lists {
-    display: flex;
-    justify-content: space-around;
-}
-
-.flex_user_list {
-    width: 30%;
-}
-
 .action_cell {
     width: 10%;
 }
 
 .user_cell{
     text-align: left;
-}
-
-.userlist_panel {
-    margin-right: 20%;
-    margin-left: 20%;
 }
