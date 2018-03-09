@@ -5,74 +5,94 @@ import { RegistrationHttpService } from './registration-http.service';
 @Injectable()
 export class RegistrationService {
 
-  reservation: Registration;
-
+  registration: Registration;
 
   constructor(private registrationHttpService: RegistrationHttpService) {
-    this.reservation = new Registration();
     this.registrationHttpService = registrationHttpService;
   }
 
-  getRegistrationNext() {
+  isAvailable() : Boolean {
+    return this.registration !== null && this.registration !== undefined;
+  }
+
+  getRegistrationNext(): Promise<Registration> {
     return this.registrationHttpService.getRegistrationNext();
   }
 
+  getRegistrationDate(): Date {
+    if (this.registration) {
+      return this.registration.date;
+    }
+  }
+
+  getRegistrationEndAt(): Date {
+    if (this.registration) {
+      return this.registration.end_at;
+    }
+  }
+
   addUser(name: string): void {
-    if (name) {
-      this.reservation.addUser(name);
-      this.registrationHttpService.updateRegistration(this.reservation);
+    if (name && this.registration) {
+      this.registration.addUser(name);
+      this.registrationHttpService.updateRegistration(this.registration);
     }
   }
 
   addUnavailableUser(name: string): void {
-    if (name) {
-      this.reservation.addUnavailableUser(name);
-      this.registrationHttpService.updateRegistration(this.reservation)
+    if (name && this.registration) {
+      this.registration.addUnavailableUser(name);
+      this.registrationHttpService.updateRegistration(this.registration)
     }
   }
 
   putUserOnStandby(name: string): void {
-    if (name) {
-      this.reservation.addUncertainUser(name);
-      this.registrationHttpService.updateRegistration(this.reservation);
+    if (name && this.registration) {
+      this.registration.addUncertainUser(name);
+      this.registrationHttpService.updateRegistration(this.registration);
     }
   }
 
   getAvailableUsers(): String[] {
-    return this.reservation.getAvailableUsers();
+    if (this.registration) {
+      return this.registration.liste_participants;
+    }
   }
 
   getUncertainUsers(): String[] {
-    return this.reservation.getUncertainUsers();
+    if (this.registration) {
+      return this.registration.liste_incertains;
+    }
   }
 
   getUnavailableUsers(): String[] {
-    return this.reservation.getUnavailableUsers();
+    if (this.registration) {
+      return this.registration.liste_absents;
+    }
   }
 
   deleteAvailableUser(name: string): void {
-    if (name) {
-      this.reservation.deleteAvailableUserByName(name);
-      this.registrationHttpService.updateRegistration(this.reservation);
+    if (name && this.registration) {
+      this.registration.deleteAvailableUserByName(name);
+      this.registrationHttpService.updateRegistration(this.registration);
     }
   }
 
   deleteUncertainUser(name: string): void {
-    if (name) {
-      this.reservation.deleteUncertainUserByName(name);
-      this.registrationHttpService.updateRegistration(this.reservation);
+    if (name && this.registration) {
+      this.registration.deleteUncertainUserByName(name);
+      this.registrationHttpService.updateRegistration(this.registration);
     }
   }
 
   deleteUnavailableUser(name: string): void {
-    if (name) {
-      this.reservation.deleteUnavailableUserByName(name);
-      this.registrationHttpService.updateRegistration(this.reservation);
+    if (name && this.registration) {
+      this.registration.deleteUnavailableUserByName(name);
+      this.registrationHttpService.updateRegistration(this.registration);
     }
   }
 
   setRegistration(registrationData: any) {
-    this.reservation = new Registration(
+    this.registration = new Registration(
       registrationData._id,
       registrationData.not_participants,
       registrationData.participants,

@@ -11,7 +11,7 @@ import { RegistrationService } from './registration/registration.service'
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationHttpService } from './registration/registration-http.service';
-
+import { LOCALE_ID } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { RegistrationHttpService } from './registration/registration-http.servic
     ListUsersComponent,
     RoadmapComponent,
     RegistrationComponent,
-    ],
+  ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
@@ -31,7 +31,8 @@ import { RegistrationHttpService } from './registration/registration-http.servic
   providers: [
     RegistrationService,
     RegistrationHttpService,
-     ],
+    { provide: LOCALE_ID, useValue: "fr" }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

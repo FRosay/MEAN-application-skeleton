@@ -1,23 +1,23 @@
 export class Registration {
     id: string;
-    date: number;
-    end_at: number;
+    date: Date;
+    end_at: Date;
     liste_participants: String[];
     liste_absents: String[];
     liste_incertains: String[];
 
     constructor(id= null,
-        liste_absents = [],
-        list_participants = [],
-        liste_incertains = [],
-        end_at = null,
-        date = null) {
+        liste_absents:String[] = [],
+        list_participants:String[] = [],
+        liste_incertains:String[] = [],
+        end_at:String = null,
+        date:String = null) {
         this.id = id;
         this.liste_absents = liste_absents;
         this.liste_participants = list_participants;
         this.liste_incertains = liste_incertains;
-        this.end_at = end_at;
-        this.date = date;
+        this.end_at = new Date(end_at.toString());
+        this.date = new Date(date.toString());
     }
 
     addUser(user: String) {
@@ -39,18 +39,6 @@ export class Registration {
         this.deleteUnavailableUserByName(user);
         this.deleteUncertainUserByName(user);
         this.liste_incertains.push(user);
-    }
-
-    getAvailableUsers(): String[] {
-        return this.liste_participants;
-    }
-
-    getUncertainUsers(): String[] {
-        return this.liste_incertains;
-    }
-
-    getUnavailableUsers(): String[] {
-        return this.liste_absents;
     }
 
     deleteAvailableUserByName(name: String): void {

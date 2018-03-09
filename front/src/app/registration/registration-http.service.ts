@@ -12,21 +12,22 @@ export class RegistrationHttpService {
   constructor(
     private http: HttpClient) { }
 
-  getRegistrationNext() {
-    return new Promise((resolve, reject) => {
+  getRegistrationNext(): Promise<Registration> {
+    return new Promise<Registration>((resolve, reject) => {
       this.http.get<any>(this.registration_url + "/next")
         .subscribe((response) => {
           if (response.error) {
+            console.error(response.error);
             reject(response.error);
           } else {
-            resolve(response);
+            resolve(response.registration);
           }
         });
     });
   }
 
-  updateRegistration(registration: Registration) {
-    return new Promise((resolve, reject) => {
+  updateRegistration(registration: Registration): Promise<Registration> {
+    return new Promise<Registration>((resolve, reject) => {
       this.http.put<any>(this.registration_url + "/update", {
         registration:
           {
@@ -37,9 +38,10 @@ export class RegistrationHttpService {
           }
       }).subscribe((response) => {
         if (response.error) {
+          console.error(response.error);
           reject(response.error);
         } else {
-          resolve(response);
+          resolve(response.registration);
         }
       });
     });

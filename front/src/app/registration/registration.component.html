@@ -1,9 +1,18 @@
 <div>
   <nav>
-    <a routerLink="/roadmap">--> Notre Roadmap ! <--</a>
+    <a routerLink="/roadmap">--> Notre Roadmap !
+      <--</a>
   </nav>
-  <app-register-button></app-register-button>
-  <app-list-users (onDelete)="deleteAvailableUser($event)" [user_list]="getAvailableUsers()"></app-list-users>
-  <app-list-users (onDelete)="deleteUncertainUser($event)" [user_list]="getUncertainUsers()"></app-list-users>
-  <app-list-users (onDelete)="deleteUnavailableUser($event)" [user_list]="getUnavailableUsers()"></app-list-users>
-<div>
+  <div *ngIf="serviceAvailable(); else loading">
+    <h2>Réservation pour le
+      <span>{{getRegistrationDate() | date:"fullDate"}}</span>
+    </h2>
+    <app-register-button></app-register-button>
+    <app-list-users (onDelete)="deleteAvailableUser($event)" title="Présents" [user_list]="getAvailableUsers()"></app-list-users>
+    <app-list-users (onDelete)="deleteUncertainUser($event)" title="Peux compléter" [user_list]="getUncertainUsers()"></app-list-users>
+    <app-list-users (onDelete)="deleteUnavailableUser($event)" title="Ne viens pas" [user_list]="getUnavailableUsers()"></app-list-users>
+  </div>
+  <ng-template #loading>
+    <div class="loader"></div> 
+  </ng-template>
+  <div>

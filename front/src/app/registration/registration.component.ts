@@ -23,6 +23,18 @@ export class RegistrationComponent implements OnInit {
       })
   }
 
+  serviceAvailable(): Boolean {
+    return this.registrationService.isAvailable();
+  }
+
+  getRegistrationDate(): Date {
+    return this.registrationService.getRegistrationDate();
+  }
+
+  getRegistrationEndDate(): Date {
+    return this.registrationService.getRegistrationEndAt();
+  }
+
   getAvailableUsers(): String[] {
     return this.registrationService.getAvailableUsers();
   }
