@@ -9,12 +9,18 @@ import { Registration } from '../elements/registration';
 })
 export class RegistrationComponent implements OnInit {
 
+  userName: String;
+
   constructor(private registrationService: RegistrationService) {
     this.registrationService = registrationService;
   }
 
   ngOnInit() {
     this.getRegistration();
+  }
+
+  selectUser(user: String) {
+    this.userName = user;
   }
 
   getRegistration() {
@@ -25,7 +31,7 @@ export class RegistrationComponent implements OnInit {
     .catch(() => {
       setTimeout(() => {
         this.getRegistration();
-      })
+      }, 2000)
     })
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { RegistrationService } from '../registration.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { RegistrationService } from '../registration.service';
   styleUrls: ['./register-button.component.css']
 })
 export class RegisterButtonComponent implements OnInit {
+
+  @Input() selectedUserName: String;
 
   constructor(private registrationService: RegistrationService) {
     this.registrationService = registrationService
@@ -17,6 +19,7 @@ export class RegisterButtonComponent implements OnInit {
 
   addUser(name: string): void {
     if (name) {
+      console.log(this.selectedUserName);
       this.registrationService.addUser(name);
     }
   }
@@ -29,8 +32,6 @@ export class RegisterButtonComponent implements OnInit {
 
   addUnavailableUser(name: string): void {
     if (name) {
-      this.registrationService.deleteUnavailableUser(name);
-      this.registrationService.deleteAvailableUser(name);
       this.registrationService.addUnavailableUser(name);
     }
   }

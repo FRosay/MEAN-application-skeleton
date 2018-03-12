@@ -4,7 +4,7 @@
     <table class="table table-striped table-bordered">
       <tbody>
         <tr *ngFor="let user of user_list">
-          <td class="user_cell">
+          <td (click)="selectUser(user)" class="user_cell">
             <span #userName>{{user}}</span>
           </td>
           <td class="action_cell" (click)="delete(user)">

@@ -41,7 +41,7 @@ export class RegistrationService {
   addUnavailableUser(name: string): void {
     if (name && this.registration) {
       this.registration.addUnavailableUser(name);
-      this.registrationHttpService.updateRegistration(this.registration)
+      this.registrationHttpService.updateRegistration(this.registration);
     }
   }
 

@@ -8,6 +8,7 @@ class RegistrationController {
     create(registration) {
         return new Promise((resolve, reject) => {
             const registrationObj = new RegistrationSchema(registration);
+            console.log(registrationObj);
             this.validate(registrationObj)
             .then(() => registrationObj.save())
             .then((registrationSaved) => resolve(registrationSaved))

@@ -14,6 +14,11 @@ import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationHttpService } from './registration/registration-http.service';
 import { LOCALE_ID } from '@angular/core';
 import { AlertsComponent } from './alerts/alerts.component';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+// the second parameter 'fr' is optional
+registerLocaleData(localeFr, 'fr');
 
 @NgModule({
   declarations: [
@@ -35,8 +40,7 @@ import { AlertsComponent } from './alerts/alerts.component';
     RegistrationService,
     AlertsService,
     RegistrationHttpService,
-    { provide: LOCALE_ID, useValue: "fr" }
-  ],
+    { provide: LOCALE_ID, useValue: 'fr' }  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -16,11 +16,13 @@ const jobList = [function createWeeklyRegistration() {
     Registration.getNext()
         .then((registration) => {
             const date = nextSaturday();
-            if (moment(date) < moment()) {
-                return Registration.create({
+            if (!registration || moment(registration.date) < date) {
+                const registrationNew = {
                     date,
                     end_at: date
-                })
+                };
+                console.log(registrationNew);
+                return Registration.create(registrationNew);
             }
         })
         .catch((error) => {

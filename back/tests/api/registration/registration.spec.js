@@ -1,6 +1,5 @@
 process.env.NODE_ENV = 'test';
 const server = require('../../../bin/www')
-
 const requestSender = require("../request_sender");
 const chai = require('chai');
 const expect = chai.expect;

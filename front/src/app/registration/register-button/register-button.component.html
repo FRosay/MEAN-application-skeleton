@@ -1,10 +1,10 @@
 <div class="input-group">
         <div class="form-group">
-                <input class="form-control" placeholder="Votre nom" #userName />
+                <input class="form-control" placeholder="Votre nom" [(ngModel)]="selectedUserName" />
                 <label for="newUser">Je... </label>
-                <button type="button" class="btn btn-primary" (click)="addUser(userName.value)">Viens</button>
-                <button type="button" class="btn btn-warning" (click)="putUserOnStandby(userName.value)">Peux compléter</button>
-                <button type="button" class="btn btn-danger" (click)="addUnavailableUser(userName.value)">Ne viens pas</button>
+                <button type="button" class="btn btn-primary" (click)="addUser(selectedUserName)">Viens</button>
+                <button type="button" class="btn btn-warning" (click)="putUserOnStandby(selectedUserName)">Peux compléter</button>
+                <button type="button" class="btn btn-danger" (click)="addUnavailableUser(selectedUserName)">Ne viens pas</button>
         </div>
 </div>
 
