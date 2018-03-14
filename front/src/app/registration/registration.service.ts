@@ -31,7 +31,7 @@ export class RegistrationService {
     }
   }
 
-  addUser(name: string): void {
+  addParticipatinUser(name: string): void {
     if (name && this.registration) {
       this.registration.addUser(name);
       this.registrationHttpService.updateRegistration(this.registration);
@@ -45,7 +45,7 @@ export class RegistrationService {
     }
   }
 
-  putUserOnStandby(name: string): void {
+  addUncertainUser(name: string): void {
     if (name && this.registration) {
       this.registration.addUncertainUser(name);
       this.registrationHttpService.updateRegistration(this.registration);

@@ -8,11 +8,10 @@ class RegistrationController {
     create(registration) {
         return new Promise((resolve, reject) => {
             const registrationObj = new RegistrationSchema(registration);
-            console.log(registrationObj);
             this.validate(registrationObj)
-            .then(() => registrationObj.save())
-            .then((registrationSaved) => resolve(registrationSaved))
-            .catch((error) => reject(error));
+                .then(() => registrationObj.save())
+                .then((registrationSaved) => resolve(registrationSaved))
+                .catch((error) => reject(error));
         })
     }
 
@@ -40,7 +39,10 @@ class RegistrationController {
                     if (err) {
                         return reject(err);
                     }
-                    return resolve(registrations[0]);
+                    if (registrations.length && registrations[0]) {
+                        return resolve(registrations[0]);
+                    }
+                    return resolve(null);
                 })
         });
     }
@@ -49,7 +51,7 @@ class RegistrationController {
         return new Promise((resolve, reject) => {
             RegistrationSchema.findById(registration._id, (err, registrationObj) => {
                 if (!registrationObj) {
-                    return reject("can't find registration : "+ JSON.stringify(registration));
+                    return reject("can't find registration : " + JSON.stringify(registration));
                 }
                 registrationObj.set(registration);
                 return this.validate(registrationObj)

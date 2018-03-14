@@ -21,42 +21,39 @@ export class Registration {
     }
 
     addUser(user: string) {
-        this.deleteAvailableUserByName(user);
-        this.deleteUnavailableUserByName(user);
-        this.deleteUncertainUserByName(user);
+        this.deleteFromLists(user);
         this.liste_participants.push(user);
     }
 
     addUnavailableUser(user: string): void {
-        this.deleteAvailableUserByName(user);
-        this.deleteUnavailableUserByName(user);
-        this.deleteUncertainUserByName(user);
+        this.deleteFromLists(user);
         this.liste_absents.push(user);
     }
 
     addUncertainUser(user: string): void {
-        this.deleteAvailableUserByName(user);
-        this.deleteUnavailableUserByName(user);
-        this.deleteUncertainUserByName(user);
+        this.deleteFromLists(user);
         this.liste_incertains.push(user);
     }
 
+    deleteFromLists(user: string) : void {
+        this.deleteAvailableUserByName(user);
+        this.deleteUnavailableUserByName(user);
+        this.deleteUncertainUserByName(user);
+    }
+
     deleteAvailableUserByName(name: string): void {
-        this.liste_participants = this.liste_participants.filter(function (user) {
-            return user !== name;
-        });
+        this.liste_participants = this.liste_participants.filter((user) =>
+            user !== name);
     }
 
     deleteUncertainUserByName(name: string): void {
-        this.liste_incertains = this.liste_incertains.filter(function (user) {
-            return user !== name;
-        });
+        this.liste_incertains = this.liste_incertains.filter((user) =>
+            user !== name);
     }
 
     deleteUnavailableUserByName(name: string): void {
-        this.liste_absents = this.liste_absents.filter(function (user) {
-            return user !== name;
-        });
+        this.liste_absents = this.liste_absents.filter((user) => 
+            user !== name);
     }
 
 }

@@ -25,7 +25,11 @@ export class RegistrationHttpService {
             this.alertService.showErrorAlert(response.error);
             reject(response.error);
           } else {
-            resolve(response.registration);
+            if (response.registration) {
+              return resolve(response.registration);
+            }
+            this.alertService.showErrorAlert("Le serveur ne connait pas la prochaine réservation");
+            return reject("Le serveur ne connait pas la prochaine réservation");
           }
         }, (error) => {
           this.alertService.showErrorAlert(error.message);

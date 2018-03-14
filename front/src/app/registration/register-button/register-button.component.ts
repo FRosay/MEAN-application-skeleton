@@ -17,15 +17,15 @@ export class RegisterButtonComponent implements OnInit {
   ngOnInit() {
   }
 
-  addUser(name: String): void {
+  addParticipatingUser(name: String): void {
     if (name) {
-      this.registrationService.addUser(String(name));
+      this.registrationService.addParticipatinUser(String(name));
     }
   }
 
-  putUserOnStandby(name: String): void {
+  addUncertainUser(name: String): void {
     if (name) {
-      this.registrationService.putUserOnStandby(String(name));
+      this.registrationService.addUncertainUser(String(name));
     }
   }
 
