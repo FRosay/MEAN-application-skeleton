@@ -4,11 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { Registration } from '../elements/registration';
 import { catchError, map, tap } from 'rxjs/operators';
 import { AlertsService } from '../alerts/alerts.service';
-
+import { environment } from '../../environments/environment';
 @Injectable()
 export class RegistrationHttpService {
 
-  private registration_url = "http://localhost:3000/api/registration";
+  private registration_url = environment.apiUrl + "registration";
 
   constructor(
     private http: HttpClient,

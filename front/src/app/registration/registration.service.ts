@@ -52,7 +52,7 @@ export class RegistrationService {
     }
   }
 
-  getAvailableUsers(): String[] {
+  getAvailableUsers(): string[] {
     if (this.registration) {
       return this.registration.liste_participants;
     }

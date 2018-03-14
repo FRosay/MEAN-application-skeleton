@@ -8,7 +8,7 @@ import { RegistrationService } from '../registration.service';
 })
 export class RegisterButtonComponent implements OnInit {
 
-  @Input() selectedUserName: String;
+  @Input() selectedUserName: string;
 
   constructor(private registrationService: RegistrationService) {
     this.registrationService = registrationService
@@ -17,22 +17,21 @@ export class RegisterButtonComponent implements OnInit {
   ngOnInit() {
   }
 
-  addUser(name: string): void {
+  addUser(name: String): void {
     if (name) {
-      console.log(this.selectedUserName);
-      this.registrationService.addUser(name);
+      this.registrationService.addUser(String(name));
     }
   }
 
-  putUserOnStandby(name: string): void {
+  putUserOnStandby(name: String): void {
     if (name) {
-      this.registrationService.putUserOnStandby(name);
+      this.registrationService.putUserOnStandby(String(name));
     }
   }
 
-  addUnavailableUser(name: string): void {
+  addUnavailableUser(name: String): void {
     if (name) {
-      this.registrationService.addUnavailableUser(name);
+      this.registrationService.addUnavailableUser(String(name));
     }
   }
 

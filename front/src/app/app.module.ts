@@ -27,7 +27,7 @@ registerLocaleData(localeFr, 'fr');
     ListUsersComponent,
     RoadmapComponent,
     RegistrationComponent,
-    AlertsComponent,
+    AlertsComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +40,7 @@ registerLocaleData(localeFr, 'fr');
     RegistrationService,
     AlertsService,
     RegistrationHttpService,
-    { provide: LOCALE_ID, useValue: 'fr' }  ],
+    { provide: LOCALE_ID, useValue: 'fr' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

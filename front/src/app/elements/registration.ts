@@ -2,16 +2,16 @@ export class Registration {
     id: string;
     date: Date;
     end_at: Date;
-    liste_participants: String[];
-    liste_absents: String[];
-    liste_incertains: String[];
+    liste_participants: string[];
+    liste_absents: string[];
+    liste_incertains: string[];
 
     constructor(id= null,
-        liste_absents:String[] = [],
-        list_participants:String[] = [],
-        liste_incertains:String[] = [],
-        end_at:String = null,
-        date:String = null) {
+        liste_absents:string[] = [],
+        list_participants:string[] = [],
+        liste_incertains:string[] = [],
+        end_at:string = null,
+        date:string = null) {
         this.id = id;
         this.liste_absents = liste_absents;
         this.liste_participants = list_participants;
@@ -20,40 +20,40 @@ export class Registration {
         this.date = new Date(date.toString());
     }
 
-    addUser(user: String) {
+    addUser(user: string) {
         this.deleteAvailableUserByName(user);
         this.deleteUnavailableUserByName(user);
         this.deleteUncertainUserByName(user);
         this.liste_participants.push(user);
     }
 
-    addUnavailableUser(user: String): void {
+    addUnavailableUser(user: string): void {
         this.deleteAvailableUserByName(user);
         this.deleteUnavailableUserByName(user);
         this.deleteUncertainUserByName(user);
         this.liste_absents.push(user);
     }
 
-    addUncertainUser(user: String): void {
+    addUncertainUser(user: string): void {
         this.deleteAvailableUserByName(user);
         this.deleteUnavailableUserByName(user);
         this.deleteUncertainUserByName(user);
         this.liste_incertains.push(user);
     }
 
-    deleteAvailableUserByName(name: String): void {
+    deleteAvailableUserByName(name: string): void {
         this.liste_participants = this.liste_participants.filter(function (user) {
             return user !== name;
         });
     }
 
-    deleteUncertainUserByName(name: String): void {
+    deleteUncertainUserByName(name: string): void {
         this.liste_incertains = this.liste_incertains.filter(function (user) {
             return user !== name;
         });
     }
 
-    deleteUnavailableUserByName(name: String): void {
+    deleteUnavailableUserByName(name: string): void {
         this.liste_absents = this.liste_absents.filter(function (user) {
             return user !== name;
         });

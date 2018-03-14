@@ -7,18 +7,24 @@ export class AlertsService {
 
   alerts: Alert[];
 
-  constructor() { 
+  constructor() {
     this.alerts = [];
   }
 
   private showAlert(message: String, level: Level) {
-    const newAlert = new Alert(message, level);
-    this.alerts.push(newAlert);
-    setTimeout(() => {
-      this.alerts = this.alerts.filter((alert) => {
-        alert.id !== newAlert.id;
-      })
-    }, 3000);
+    const alert = this.alerts.find((alert) => alert.message === message);
+    if (alert) {
+      alert.incCardinality();
+      alert.setTimeOut(() =>
+        this.alerts = this.alerts.filter((other_alert) => alert.message !== other_alert.message)
+        , 3000);
+    } else {
+      const newAlert = new Alert(message, level);
+      this.alerts.push(newAlert);
+      newAlert.setTimeOut(() =>
+        this.alerts = this.alerts.filter((other_alert) => newAlert.message !== other_alert.message)
+        , 3000);
+    }
   }
 
   showInfoAlert(message: String) {
