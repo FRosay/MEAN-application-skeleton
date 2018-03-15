@@ -1,6 +1,6 @@
 {
     "DBConfig": {
-        "host" : "localhost",
+        "host" : "mongo",
         "port" : 27017,
         "name" : "badmintonApp",
         "prefix" : "mongodb://"
