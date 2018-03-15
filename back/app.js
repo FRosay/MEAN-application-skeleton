@@ -10,8 +10,21 @@ const async = require('async');
 
 // Database connection 
 const db_config = config.DBConfig
-mongoose.connect(db_config.prefix + db_config.host + "/" + db_config.name, {});
-logger.info("Connecting to database : " + config.DBHost);
+var mongoUrl = db_config.prefix + db_config.host + "/" + db_config.name
+
+var connectWithRetry = function () {
+    return mongoose.connect(mongoUrl)
+        .then(() => {
+            logger.info("Connecting to database : " + config.DBHost);
+        })
+        .catch((err) => {
+            if (err) {
+                logger.error(err);
+                setTimeout(connectWithRetry, 5000);
+            }
+        });
+};
+connectWithRetry();
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -19,12 +32,12 @@ db.on('error', console.error.bind(console, 'connection error:'));
 // Initialize our app variable
 const app = express();
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT")
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+});
 
 const api = require('./routes/api');
 app.use(express.static(path.resolve(__dirname + '/../front/dist')));
@@ -42,7 +55,5 @@ app.get('*', (req, res) => {
 });
 
 jobs.start();
-
-
 
 module.exports = app;
