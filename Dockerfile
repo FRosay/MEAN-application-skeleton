@@ -1,9 +1,9 @@
-FROM node:slim as builder-front
+FROM arm32v7/node as builder-front
 COPY ./front /front
 WORKDIR /front
 RUN cd /front && npm install && npm run-script build
 
-FROM node:slim
+FROM arm32v7/node
 WORKDIR /app
 COPY ./back /app/back/
 COPY --from=builder-front front/dist /app/front/dist/
