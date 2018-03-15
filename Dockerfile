@@ -9,6 +9,6 @@ COPY ./back /app/back/
 COPY --from=builder-front front/dist /app/front/dist/
 COPY --from=builder-front front/node_modules /app/front/dist/
 RUN cd /app/back && npm install
-CMD cd /app/back && export NODE_ENV=prod && node bin/www && echo "start"
+CMD cd /app/back && npm run-script start-prod
 
 EXPOSE 3000
