@@ -2,15 +2,16 @@ version: "3"
 services:
   badapp:
     container_name: badapp
+    image: oursgroumy/badapp
     restart: always
-    build: .
     ports:
-      - "3000:3000"
+      - "80:3000"
     links:
       - mongo
   mongo:
     container_name: mongo
     image: mongo
+    restart: always
     volumes:
       - db-data:/data/db
     ports:

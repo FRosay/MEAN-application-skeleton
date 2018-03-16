@@ -1,0 +1,9 @@
+
+
+#update docker image :
+$ docker  build -t oursgroumy/badapp .
+$ docker login
+$ docker push oursgroumy/badapp
+
+start the application :
+$ docker compose up
