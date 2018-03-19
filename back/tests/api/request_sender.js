@@ -1,7 +1,6 @@
-const request = require('request');
+const request = require("request")
 class TestHttpSender {
-
-    static createPost(url, body) {
+    static createPost (url, body) {
         return new Promise((resolve, reject) => {
             request({
                 url: "http://localhost:3000" + url,
@@ -10,15 +9,14 @@ class TestHttpSender {
             }, (error, response, body) => {
                 if (response.statusCode === 200) {
                     return resolve(body)
-                }
-                else {
+                } else {
                     return reject(error || body.message || "An error has happened")
                 }
             })
         })
     }
 
-    static createPut(url, body) {
+    static createPut (url, body) {
         return new Promise((resolve, reject) => {
             request({
                 url: "http://localhost:3000" + url,
@@ -27,39 +25,32 @@ class TestHttpSender {
             }, (error, response, body) => {
                 if (response.statusCode === 200) {
                     return resolve(body)
-                }
-                else {
+                } else {
                     return reject(error || body.message || "An error has happened")
                 }
             })
         })
     }
 
-    static createGet(url) {
+    static createGet (url) {
         return new Promise((resolve, reject) => {
             request({
                 url: "http://localhost:3000" + url,
-                method: "GET",
+                method: "GET"
             }, (error, response, body) => {
                 if (!error && response.statusCode === 200) {
                     try {
-                        body = JSON.parse(body);
-                        resolve(body);
+                        body = JSON.parse(body)
+                        resolve(body)
                     } catch (error) {
-                        resolve(body);
+                        resolve(body)
                     }
-                }
-                else {
+                } else {
                     reject(error)
                 }
             })
         })
     }
-
 }
 
-function createRequest(url) {
-
-}
-
-module.exports = TestHttpSender;
+module.exports = TestHttpSender
