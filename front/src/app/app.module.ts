@@ -16,6 +16,8 @@ import { LOCALE_ID } from '@angular/core';
 import { AlertsComponent } from './alerts/alerts.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { TransactionButtonComponent } from './tricount/transaction-button/transaction-button.component';
+import { TransactionViewComponent } from './tricount/transaction-view/transaction-view.component';
 
 // the second parameter 'fr' is optional
 registerLocaleData(localeFr, 'fr');
@@ -27,7 +29,9 @@ registerLocaleData(localeFr, 'fr');
     ListUsersComponent,
     RoadmapComponent,
     RegistrationComponent,
-    AlertsComponent
+    AlertsComponent,
+    TransactionButtonComponent,
+    TransactionViewComponent
   ],
   imports: [
     BrowserModule,

@@ -7,7 +7,7 @@
           <td (click)="selectUser(user)" class="user_cell">
             <span #userName>{{user}}</span>
           </td>
-          <td class="action_cell" (click)="delete(user)">
+          <td (click)="delete(user)" class="action_cell">
             <a class="glyphicon glyphicon-remove"></a>
           </td>
         </tr>

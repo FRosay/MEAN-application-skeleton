@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Registration } from '../elements/registration';
+import { Registration } from './element/registration';
 import { RegistrationHttpService } from './registration-http.service';
 
 @Injectable()
