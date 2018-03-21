@@ -1,9 +1,36 @@
 
+# Dev environement
 
-#update docker image :
+## Prérequis
+install mongodb
+
+
+## install node_modules 
+cd ./back
+npm install
+cd ../front
+npm install
+
+## launch mongo
+mongod
+
+## launch node
+cd back
+npm start
+
+## angular
+cd front
+npm start
+# Documentation
+## API
+https://app.swaggerhub.com/apis/le-cerf-vert/badApp/1.0.0
+
+# Deployment
+
+## update docker image
 $ docker  build -t oursgroumy/badapp .
 $ docker login
 $ docker push oursgroumy/badapp
 
-start the application :
+## start the application :
 $ docker compose up

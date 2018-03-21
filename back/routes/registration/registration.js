@@ -5,7 +5,7 @@ const logger = require("../../logger")
 
 router.post("/new", (req, res) => {
     if (!req.body.registration) {
-        return res.status(500).send({ status: 500, message: "NO_REGISTRATION" })
+        return res.status(500).send({ status: 400, message: "NO_REGISTRATION" })
     } else {
         logger.info(req.body.registration)
         Registration.create(req.body.registration)
@@ -33,9 +33,9 @@ router.get("/next", (req, res) => {
 
 router.put("/update", (req, res) => {
     if (!req.body.registration) {
-        const error = "NO_REGISTRATION"
+        const error = new Error("can't find registration")
         logger.error(error)
-        res.status(400).send({ status: 400, message: error })
+        res.status(404).send({ status: 404, message: error.message })
     } else {
         Registration.update(req.body.registration)
             .then((registration) => {
