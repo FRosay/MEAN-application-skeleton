@@ -11,12 +11,17 @@ export class ListUsersComponent implements OnInit {
   @Input() user_list: String[];
   @Input() title: String;
   @Output() onDelete: EventEmitter<String> = new EventEmitter<String>();
-  @Output() onUserSelect: EventEmitter<String> = new EventEmitter<String>();
+
+
+  constructor(private registrationService: RegistrationService) {
+    this.registrationService = registrationService
+  }
+
   ngOnInit() {
   }
 
   selectUser(user: String) {
-    this.onUserSelect.emit(user);
+    this.registrationService.updateSelectedUser(user);
   }
 
   delete(user: String) {

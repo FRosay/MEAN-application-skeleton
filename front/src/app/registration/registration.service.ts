@@ -1,14 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Registration } from './element/registration';
 import { RegistrationHttpService } from './registration-http.service';
+import { Subject }    from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RegistrationService {
 
   registration: Registration;
+  userSelectedSubject: Subject<string>;
+
 
   constructor(private registrationHttpService: RegistrationHttpService) {
     this.registrationHttpService = registrationHttpService;
+    this.userSelectedSubject = new Subject<string>();
+  }
+
+  getUserSelectedObservable() : Observable<string> {
+    return this.userSelectedSubject.asObservable()
+  }
+
+  updateSelectedUser(user) {
+    this.userSelectedSubject.next(user);
   }
 
   isAvailable() : Boolean {
@@ -27,7 +40,7 @@ export class RegistrationService {
 
   getRegistrationEndAt(): Date {
     if (this.registration) {
-      return this.registration.end_at;
+      return this.registration.end_date;
     }
   }
 
@@ -97,8 +110,9 @@ export class RegistrationService {
       registrationData.not_participants,
       registrationData.participants,
       registrationData.uncertains,
-      registrationData.end_at,
-      registrationData.date
+      registrationData.end_date,
+      registrationData.date,
+      registrationData.registration_limit_date
     );
   }
 

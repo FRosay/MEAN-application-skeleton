@@ -1,7 +1,8 @@
 export class Registration {
     id: string;
     date: Date;
-    end_at: Date;
+    end_date: Date;
+    registration_limit_date: Date;
     liste_participants: string[];
     liste_absents: string[];
     liste_incertains: string[];
@@ -10,14 +11,16 @@ export class Registration {
         liste_absents:string[] = [],
         list_participants:string[] = [],
         liste_incertains:string[] = [],
-        end_at:string = null,
-        date:string = null) {
+        end_date:string = null,
+        date:string = null,
+        registration_limit_date: string = null) {
         this.id = id;
         this.liste_absents = liste_absents;
         this.liste_participants = list_participants;
         this.liste_incertains = liste_incertains;
-        this.end_at = new Date(end_at.toString());
+        this.end_date = new Date(end_date.toString());
         this.date = new Date(date.toString());
+        this.registration_limit_date = new Date(registration_limit_date.toString());
     }
 
     addUser(user: string) {

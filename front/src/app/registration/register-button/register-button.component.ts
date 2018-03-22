@@ -8,10 +8,13 @@ import { RegistrationService } from '../registration.service';
 })
 export class RegisterButtonComponent implements OnInit {
 
-  @Input() selectedUserName: string;
+  selectedUserName: string;
 
   constructor(private registrationService: RegistrationService) {
     this.registrationService = registrationService
+    this.registrationService.getUserSelectedObservable().subscribe((user) => {
+      this.selectedUserName = user;
+    })
    }
 
   ngOnInit() {

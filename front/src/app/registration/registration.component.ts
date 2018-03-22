@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from './registration.service';
 import { Registration } from './element/registration';
+import { Subject }    from 'rxjs/Subject';
 
 @Component({
   selector: 'app-registration',
@@ -8,8 +9,6 @@ import { Registration } from './element/registration';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-
-  userName: String;
 
   constructor(private registrationService: RegistrationService) {
     this.registrationService = registrationService;
@@ -19,8 +18,10 @@ export class RegistrationComponent implements OnInit {
     this.getRegistration();
   }
 
+  userSelectedSubject:Subject<any> = new Subject();
+
   selectUser(user: String) {
-    this.userName = user;
+    this.userSelectedSubject.next(user);
   }
 
   getRegistration() {

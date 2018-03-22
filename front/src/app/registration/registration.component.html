@@ -4,15 +4,11 @@
       <--</a>
   </nav>
   <div *ngIf="serviceAvailable(); else loading">
-    <h2>Réservation pour le
-      <b>{{getRegistrationDate() | date:"fullDate"}}</b>
-      <br>
-      <span *ngIf="isTimedLimited()">avant le {{getRegistrationEndDate() | date:"fullDate"}}</span>
-    </h2>
-    <app-register-button [selectedUserName]="userName"></app-register-button>
+    <h2>{{getRegistrationDate() | date:"fullDate"}} de {{getRegistrationDate() | date: "shortTime"}}h à {{getRegistrationEndDate() | date: "shortTime"}}h</h2>
+    <app-register-button></app-register-button>
     <div class="user_list_group">
       <div class="flex_user_list">
-        <app-list-users (onUserSelect)="selectUser($event)" (onDelete)="deleteAvailableUser($event)" title="Présents" [user_list]="getAvailableUsers()"></app-list-users>
+        <app-list-users (onUserSelect)="selectUser($event)" (onDelete)="deleteAvailableUser($event)" title="Viens" [user_list]="getAvailableUsers()"></app-list-users>
       </div>
       <div class="flex_user_list">
         <app-list-users (onUserSelect)="selectUser($event)" (onDelete)="deleteUncertainUser($event)" title="Peux compléter" [user_list]="getUncertainUsers()"></app-list-users>
@@ -25,5 +21,4 @@
   <ng-template class="loading" #loading>
     <div class="loader"></div>
   </ng-template>
-
 </div>
