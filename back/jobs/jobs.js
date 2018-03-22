@@ -7,7 +7,8 @@ function nextSaturday () {
     return moment().set({
         weekday: 6,
         hour: 14,
-        minutes: 0
+        minutes: 0,
+        seconds: 0
     })
 }
 
@@ -15,10 +16,13 @@ const jobList = [function createWeeklyRegistration () {
     Registration.getNext()
         .then((registration) => {
             const date = nextSaturday()
+            const endDate = moment(date).add(2, "hours")
+            const limitRegistrationDate = moment(date).subtract(1, "hour")
             if (!registration || (moment(registration.date) < date && moment(registration.date).diff(date, "hour") > 1)) {
                 const registrationNew = {
                     date,
-                    end_at: date
+                    end_date: endDate,
+                    registration_limit_date: limitRegistrationDate
                 }
                 return Registration.create(registrationNew)
             }

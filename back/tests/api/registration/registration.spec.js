@@ -21,8 +21,9 @@ describe("Registrations", () => {
             requestSender.createPost("/api/registration/new", {
                 registration:
                     {
-                        end_at: moment("03-03-2018", "MM-DD-YYYY").toDate(),
+                        end_date: moment("03-03-2018", "MM-DD-YYYY").toDate(),
                         date: moment("03-03-2018", "MM-DD-YYYY").toDate(),
+                        registration_limit_date: moment("03-03-2018", "MM-DD-YYYY").subtract(1, "day").toDate(),
                         participants: ["user1"],
                         waiting_for_other: "user2",
                         not_participants: ["user3"]
@@ -40,7 +41,8 @@ describe("Registrations", () => {
             requestSender.createPost("/api/registration/new", {
                 registration:
                     {
-                        end_at: moment("03-03-2018", "MM-DD-YYYY").toDate(),
+                        registration_limit_date: moment("03-03-2018", "MM-DD-YYYY").subtract(1, "day").toDate(),
+                        end_date: moment("03-03-2018", "MM-DD-YYYY").toDate(),
                         participants: ["user1"],
                         not_participants: ["user1"]
                     }
@@ -49,7 +51,7 @@ describe("Registrations", () => {
                     done("should have failed")
                 })
                 .catch((error) => {
-                    expect(error).to.be.eql("USER_PARTICIPATE_AND_NOT_PARTIPATE")
+                    expect(error).to.be.eql("A user cannot be both in participants, not_participants and waiting_for_others")
                     done()
                 })
         })
@@ -60,7 +62,7 @@ describe("Registrations", () => {
                     done("should have failed")
                 })
                 .catch((error) => {
-                    expect(error).to.be.eql("NO_REGISTRATION")
+                    expect(error).to.be.eql("no registration provided")
                     done()
                 })
         })
@@ -71,7 +73,8 @@ describe("Registrations", () => {
             const registration = new Registration({
                 participants: [],
                 not_participants: [],
-                end_at: moment().toDate(),
+                registration_limit_date: moment().subtract(1, "day").toDate(),
+                end_date: moment().toDate(),
                 date: moment().toDate()
             })
             registration.save()
@@ -94,7 +97,7 @@ describe("Registrations", () => {
                     done("should have failed")
                 })
                 .catch((error) => {
-                    expect(error).to.be.eql("NO_REGISTRATION")
+                    expect(error).to.be.eql("can't find registration")
                     done()
                 })
         })
@@ -104,7 +107,8 @@ describe("Registrations", () => {
                 participants: [],
                 not_participants: [],
                 date: moment().toDate(),
-                end_at: moment().toDate()
+                end_date: moment().toDate(),
+                registration_limit_date: moment().subtract(1, "day").toDate()
             })
             registration.save()
                 .then((registrationObj) => new Promise((resolve, reject) => {
@@ -117,17 +121,36 @@ describe("Registrations", () => {
                     done("should have failed")
                 })
                 .catch((error) => {
-                    expect(error).to.be.eql("USER_PARTICIPATE_AND_NOT_PARTIPATE")
+                    expect(error).to.be.eql("A user cannot be both in participants, not_participants and waiting_for_others")
                     done()
                 })
         })
 
-        it("post /api/registration/update with a date inferior to end_at", (done) => {
+        it("post /api/registration/update with a date superior to end date", (done) => {
+            const registration = new Registration({
+                date: moment().add(1, "day").toDate(),
+                end_date: moment().toDate(),
+                registration_limit_date: moment().subtract(1, "hour").toDate()
+            })
+            registration.save()
+                .then((registrationObj) => requestSender.createPut("/api/registration/update", { registration: registrationObj }))
+                .then((response) => {
+                    done("should have failed")
+                })
+                .catch((error) => {
+                    expect(error).to.be.eql("date cannot be superior to end_date")
+                    done()
+                })
+        })
+
+        it("post /api/registration/update with a date inferior to registration_limit_date", (done) => {
             const registration = new Registration({
                 participants: [],
                 not_participants: [],
-                date: moment().subtract(1, "day").toDate(),
-                end_at: moment().toDate()
+                date: moment().toDate(),
+                end_date: moment().add(1, "hour").toDate(),
+                registration_limit_date: moment().add(1, "day").toDate()
+
             })
             registration.save()
                 .then((registrationObj) => new Promise((resolve, reject) => {
@@ -138,7 +161,7 @@ describe("Registrations", () => {
                     done("should have failed")
                 })
                 .catch((error) => {
-                    expect(error).to.be.eql("REGISTRATION_ENDAT_CANNOT_BE_SUPERIOR_TO_REGISTRATION_DATE")
+                    expect(error).to.be.eql("registration limit date cannot be superior to date")
                     done()
                 })
         })
@@ -151,19 +174,22 @@ describe("Registrations", () => {
                     participants: [],
                     not_participants: [],
                     date: moment().toDate(),
-                    end_at: moment().toDate()
+                    end_date: moment().add(1, "hour").toDate(),
+                    registration_limit_date: moment().subtract(1, "day").toDate()
                 })
                 let registration2 = new Registration({
                     participants: [],
                     not_participants: [],
                     date: moment().toDate(),
-                    end_at: moment().toDate()
+                    end_date: moment().add(1, "hour").toDate(),
+                    registration_limit_date: moment().subtract(1, "day").toDate()
                 })
                 let registration3 = new Registration({
                     participants: [],
                     not_participants: [],
                     date: moment().toDate(),
-                    end_at: moment().toDate()
+                    end_date: moment().add(1, "hour").toDate(),
+                    registration_limit_date: moment().subtract(1, "day").toDate()
                 })
                 Registration.remove({})
                     .then(() => registration1.save())
@@ -194,16 +220,19 @@ describe("Registrations", () => {
                 (next) => Registration.remove({}, () => next()),
                 (next) => {
                     registration1 = new Registration({
-                        end_at: moment().add(2, "day"),
-                        date: moment().add(3, "day")
+                        end_date: moment().add(3, "day").toDate(),
+                        registration_limit_date: moment().add(1, "day").toDate(),
+                        date: moment().add(2, "day").toDate()
                     })
                     registration2 = new Registration({
-                        end_at: moment().add(1, "day"),
-                        date: moment().add(1, "day")
+                        end_date: moment().add(2, "day").toDate(),
+                        registration_limit_date: moment().toDate(),
+                        date: moment().add(1, "day").toDate()
                     })
                     registration3 = new Registration({
-                        end_at: moment().add(1, "day"),
-                        date: moment().add(2, "day")
+                        end_date: moment().add(4, "day").toDate(),
+                        registration_limit_date: moment().add(2, "day").toDate(),
+                        date: moment().add(3, "day").toDate()
                     })
                     async.parallel([
                         (next) => registration1.save(next),
@@ -232,7 +261,8 @@ describe("Registrations", () => {
                 (next) => Registration.remove({}, () => next()),
                 (next) => {
                     const registration = new Registration({
-                        end_at: moment(),
+                        end_date: moment().add(1, "hour").toDate(),
+                        registration_limit_date: moment().subtract(1, "day").toDate(),
                         date: moment()
                     })
                     registration.save((err, savedRegistration) => {
@@ -245,7 +275,8 @@ describe("Registrations", () => {
                 },
                 (next) => {
                     const registration = new Registration({
-                        end_at: moment(),
+                        end_date: moment().add(1, "hour").toDate(),
+                        registration_limit_date: moment().subtract(1, "day").toDate(),
                         date: moment()
                     })
 

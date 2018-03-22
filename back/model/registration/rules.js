@@ -8,17 +8,25 @@ module.exports = [
                     return notParticipant.toString() === participant.toString() && participant.toString !== registration.waiting_for_other
                 })
             )) {
-                return reject(new Error("USER_PARTICIPATE_AND_NOT_PARTIPATE"))
+                return reject(new Error("A user cannot be both in participants, not_participants and waiting_for_others"))
             }
             return resolve()
         })
     },
-    function dateCannotBeSuperiorToEndAt (registration) {
+    function registrationLimitDateCannotBeSuperioToDate (registration) {
         return new Promise((resolve, reject) => {
-            if (moment(registration.date) >= moment(registration.end_at)) {
+            if (moment(registration.date) >= moment(registration.registration_limit_date)) {
                 return resolve()
             }
-            return reject(new Error("REGISTRATION_ENDAT_CANNOT_BE_SUPERIOR_TO_REGISTRATION_DATE"))
+            return reject(new Error("registration limit date cannot be superior to date"))
+        })
+    },
+    function dateCannotBeSuperiorToEndDate (registration) {
+        return new Promise((resolve, reject) => {
+            if (moment(registration.date) <= moment(registration.end_date)) {
+                return resolve()
+            }
+            return reject(new Error("date cannot be superior to end_date"))
         })
     }
 ]

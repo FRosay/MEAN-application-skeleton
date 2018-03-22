@@ -5,7 +5,7 @@ const logger = require("../../logger")
 
 router.post("/new", (req, res) => {
     if (!req.body.registration) {
-        return res.status(500).send({ status: 400, message: "NO_REGISTRATION" })
+        return res.status(500).send({ status: 400, message: "no registration provided" })
     } else {
         logger.info(req.body.registration)
         Registration.create(req.body.registration)
